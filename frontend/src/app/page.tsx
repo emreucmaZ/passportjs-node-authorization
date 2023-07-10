@@ -3,7 +3,7 @@
 import { REQUEST_URL } from '@/variables';
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
-import User from '@/interfaces/User';
+import {User} from '@/interfaces/User';
 
 
 
