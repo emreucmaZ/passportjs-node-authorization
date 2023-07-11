@@ -35,7 +35,7 @@ function LoginPage() {
           });
         }}
       />
-      <button onClick={() => dispatch(login(loginForm))}>Konsola log et</button>
+      <button onClick={() => dispatch(login(loginForm))}>Giriş Yap</button>
     </>
   );
 }

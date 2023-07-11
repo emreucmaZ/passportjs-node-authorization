@@ -6,12 +6,12 @@ import axios from "axios";
 import { REQUEST_URL } from "@/variables";
 import { ActionType } from "@/redux/types/ActionType";
 
-export const login = (loginForm: ILoginForm) => {
+export function login (loginForm: ILoginForm) {
   return (dispatch: Dispatch<IUserAction>) => {
     axios
       .post(REQUEST_URL + '/login', loginForm)
       .then((response) => {
-        console.log(response);
+        window.location.reload();
 
         dispatch({
           type: ActionType.LOG_IN,
@@ -31,10 +31,17 @@ export const login = (loginForm: ILoginForm) => {
 };
 
 export function logOut() {
-  return (dispatch: Dispatch) => {
+  return (dispatch: Dispatch<IUserAction>) => {
+    window.location.reload();
     dispatch({
       type: LOG_OUT,
-      token: null,
+      payload:{
+        username: null,
+        roleId: null,
+        roles: null,
+        password: null,
+        token: null
+      }
     });
   };
 }
