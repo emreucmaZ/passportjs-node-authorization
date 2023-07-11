@@ -11,7 +11,7 @@ function LoggedIn({router}:any) {
 
     <div>Zaten Giriş Yapıldı</div>
     <button onClick={()=>{
-        dispatch(logOut())
+        dispatch<any>(logOut())
     }}>Çıkış Yap</button>
     <button onClick={()=>{
        router.push('/')

@@ -5,7 +5,7 @@ function createToken(user, jwt, getSecretKey) {
     password: user.password,
     roleId: user.roleId,
   };
-  const token = jwt.sign(payload, getSecretKey(), { expiresIn: "1h" });
+  const token = jwt.sign(payload, getSecretKey());
 
   return token;
 }

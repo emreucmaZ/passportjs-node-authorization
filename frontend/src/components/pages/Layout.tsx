@@ -1,6 +1,6 @@
 import { AppProps } from "next/app";
 import React from "react";
-import ResponsiveAppBar from "./AppBar/ResponsiveAppBar";
+import ResponsiveAppBar from "../AppBar/ResponsiveAppBar";
 import Container from "@mui/material/Container";
 
 function Layout({ Page }: any) {

@@ -1,6 +1,6 @@
 const Role = require("../models/roleModel");
 
-async function getUserRolesFromDatabase(roleId) {
+async function getUserPermissionsFromDatabase(roleId) {
   // Burada gerçek bir veritabanı bağlantısı veya veri kaynağına sorgu yapmanız gerekebilir
   // Kullanıcının rollerini veritabanından alarak döndürün
 
@@ -12,4 +12,4 @@ async function getUserRolesFromDatabase(roleId) {
   }
 }
 
-module.exports = getUserRolesFromDatabase;
+module.exports = getUserPermissionsFromDatabase;

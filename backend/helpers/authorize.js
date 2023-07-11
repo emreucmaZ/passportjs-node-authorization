@@ -1,4 +1,4 @@
-const getUserRolesFromDatabase = require("./getUserRolesFromDatabase");
+const getUserPermissionsFromDatabase = require("./getUserPermissionsFromDatabase");
 const sendResponse = require("./sendResponse");
 
 function authorize(role) {
@@ -6,7 +6,7 @@ function authorize(role) {
     // Oturumu açık olan kullanıcıyı kontrol edin
     if (req.isAuthenticated()) {
       // Kullanıcının rollerini alın
-      const userRoles = await getUserRolesFromDatabase(req.user.roleId);
+      const userRoles = await getUserPermissionsFromDatabase(req.user.roleId);
       // Kullanıcının yetkilerini kontrol edin
       const hasPermission = () => userRoles.includes(role);
       if (hasPermission()) {

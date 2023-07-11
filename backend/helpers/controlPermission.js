@@ -1,8 +1,8 @@
-const getUserRolesFromDatabase = require("./getUserRolesFromDatabase");
+const getUserPermissionsFromDatabase = require("./getUserPermissionsFromDatabase");
 const sendResponse = require("./sendResponse");
 
 async function controlPermission(req,res,roleName,controller){
-    req.user.roles = await getUserRolesFromDatabase(req.user.roleId);
+    req.user.roles = await getUserPermissionsFromDatabase(req.user.roleId);
     if (req.user.roles.includes(roleName)) {
       controller(req, res);
     } else {

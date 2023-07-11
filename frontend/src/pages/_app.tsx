@@ -8,8 +8,12 @@ import Layout from "@/components/Layout";
 import { useRouter } from "next/router";
 import LoggedIn from "@/components/pages/LoggedIn";
 
-export default function App({ Component, pageProps }: AppProps) {
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
 
+export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const { pathname } = router;
 
@@ -18,7 +22,15 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <ReduxProvider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          {store.getState().user.token ? pathname != "/login" ? <Layout Page={<Component {...pageProps} />} /> : <LoggedIn router={router} />: <LoginPage/>}
+          {store.getState().user.token ? (
+            pathname != "/login" ? (
+              <Layout Page={<Component {...pageProps} />} />
+            ) : (
+              <LoggedIn router={router} />
+            )
+          ) : (
+            <LoginPage />
+          )}
         </PersistGate>
       </ReduxProvider>
     </>

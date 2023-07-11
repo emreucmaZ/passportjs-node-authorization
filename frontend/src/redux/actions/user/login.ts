@@ -19,7 +19,6 @@ export function login (loginForm: ILoginForm) {
             token: response.data.response.token,
             username: response.data.response.user.username,
             roleId: response.data.response.user.roleId,
-            roles: response.data.response.user.roles,
             password: response.data.response.user.password
           }
         });
@@ -38,7 +37,6 @@ export function logOut() {
       payload:{
         username: null,
         roleId: null,
-        roles: null,
         password: null,
         token: null
       }

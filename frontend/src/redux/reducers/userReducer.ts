@@ -6,7 +6,6 @@ const initialState: IUserState = {
   token: null,
   username: null,
   roleId: null,
-  roles: null,
   password: null
 };
 

@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const getSecretKey = require("../../helpers/getSecretKey");
 const User = require("../../models/userModel");
-const getUserRolesFromDatabase = require("../../helpers/getUserRolesFromDatabase");
+const getUserPermissionsFromDatabase = require("../../helpers/getUserPermissionsFromDatabase");
 const createToken = require("../../helpers/createToken");
 const sendResponse = require("../../helpers/sendResponse");
 
@@ -22,7 +22,7 @@ async function loginController(req, res) {
     }
     // JWT oluştur
     if(user.roleId != 0){
-      user.roles = await getUserRolesFromDatabase(user.roleId);
+      user.roles = await getUserPermissionsFromDatabase(user.roleId);
     }
     // Kullanıcı bilgileri ve token'i dön
     return sendResponse(true,"response",{user:user,token:createToken(user, jwt, getSecretKey)},res,200)

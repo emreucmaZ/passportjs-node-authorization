@@ -1,16 +1,16 @@
 import { ILoginForm } from "@/interfaces/ILoginForm";
 import { login } from "@/redux/actions/user";
+import { AppDispatch } from "@/redux/store";
 import React, { ChangeEventHandler, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 function LoginPage() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const [loginForm, setLoginForm] = useState<ILoginForm>({
     username: "",
     password: "",
   });
   const state = useSelector((state) => state);
-  console.log(state);
 
   return (
     <>
@@ -35,7 +35,7 @@ function LoginPage() {
           });
         }}
       />
-      <button onClick={() => dispatch(login(loginForm))}>Giriş Yap</button>
+      <button onClick={() => dispatch<any>(login(loginForm))}>Giriş Yap</button>
     </>
   );
 }

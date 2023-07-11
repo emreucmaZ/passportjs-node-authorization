@@ -13,7 +13,7 @@ function createUser(req,res){
         }
         newUser.password = hash; // Şifrelenmiş parolayı kaydetme
         if(!newUser.roleId){
-            newUser.roleId = 0;
+            newUser.roleId = "64abe22ce4261d5365ae72d1";
         }
             newUser
             .save()
