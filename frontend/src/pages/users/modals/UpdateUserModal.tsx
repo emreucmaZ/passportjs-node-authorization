@@ -23,13 +23,13 @@ function UpdateUserModal({
   user,
   state,
   roles,
+  router
 }: IUpdateUserModalProps) {
   const initialValues: ICreateUpdateUserForm = {
-    _id:user._id,
+    _id: user._id,
     username: user.username,
     password: "",
-    roleId: user.roleId,
-
+    roleId: user.roleId
   };
   const UpdateUserSchema = Yup.object().shape({
     username: Yup.string()
@@ -42,14 +42,14 @@ function UpdateUserModal({
 
   const formik = useFormik({
     initialValues: {
-      _id:user._id,
+      _id: user._id,
       username: user.username,
       password: "",
       roleId: user.roleId,
     },
     validationSchema: UpdateUserSchema,
     onSubmit: (values: ICreateUpdateUserForm) => {
-      updateUser(values,state)
+      updateUser(values, state, router)
     },
   });
 
@@ -98,8 +98,8 @@ function UpdateUserModal({
                 >
                   {roles?.map((role: IRole) => {
                     return (
-                      <MenuItem onClick={()=>{
-                        formik.setFieldValue("roleId",role._id)
+                      <MenuItem onClick={() => {
+                        formik.setFieldValue("roleId", role._id)
                       }} value={role._id}>
                         {role.name}
                       </MenuItem>

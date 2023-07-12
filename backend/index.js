@@ -21,6 +21,7 @@ const getUsers = require("./controllers/user/getUsersController");
 const getUserPermissions = require("./controllers/user/getUserPermissions");
 const getRoles = require("./controllers/role/getRolesController");
 const updateUser = require("./controllers/user/updateUserController");
+const deleteUser = require("./controllers/user/deleteUserController");
 const JwtStrategy = require("passport-jwt").Strategy;
 require("./db"); // db.js dosyasını burada içe aktarın
 
@@ -34,7 +35,10 @@ passport.use(
     try {
       const user = await User.findById(payload.id);
 
-      if (payload.password == user.password && payload.username == user.username) {
+      if (
+        payload.password == user.password &&
+        payload.username == user.username
+      ) {
         user.roles = await getUserPermissionsFromDatabase(payload.roleId);
         if (user) {
           return done(null, user);
@@ -84,13 +88,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.post("/login", (req, res) => loginController(req, res));
-app.post("/signup", (req, res) => signUp(req,res));
+app.post("/signup", (req, res) => signUp(req, res));
 
 app.get(
   "/getUsers",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    controlPermission(req,res,"get_users",getUsers)
+    controlPermission(req, res, "get_users", getUsers);
   }
 );
 
@@ -110,11 +114,19 @@ app.put(
   }
 );
 
+app.delete(
+  "/deleteUser/:userId",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    controlPermission(req, res, "delete_user", deleteUser);
+  }
+);
+
 app.post(
   "/createRole",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    controlPermission(req,res, "create_role", createRole);
+    controlPermission(req, res, "create_role", createRole);
   }
 );
 
@@ -122,7 +134,7 @@ app.get(
   "/getUserPermissions",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    getUserPermissions(req,res)
+    getUserPermissions(req, res);
   }
 );
 
@@ -130,7 +142,7 @@ app.get(
   "/getRoles",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    controlPermission(req,res,"get_roles",getRoles)
+    controlPermission(req, res, "get_roles", getRoles);
   }
 );
 
@@ -138,7 +150,7 @@ app.get(
   "/isAuthorized",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    res.send(true)
+    res.send(true);
   }
 );
 

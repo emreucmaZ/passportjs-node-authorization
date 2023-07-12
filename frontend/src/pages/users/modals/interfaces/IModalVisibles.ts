@@ -5,4 +5,6 @@ export interface IModalVisibles{
     isCreateModalVisible: boolean,
     isUpdateModalVisible: boolean,
     updatingUser: IUser | null | UserDataRow,
+    isDeleteModalVisible:boolean,
+    deletingUserId: null |string
 }

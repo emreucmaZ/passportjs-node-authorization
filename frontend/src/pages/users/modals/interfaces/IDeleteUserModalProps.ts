@@ -1,12 +1,12 @@
 import { IRootState } from "@/redux/interfaces/IRootState";
-import { IRole } from "@/redux/interfaces/role/IRole";
 import { IUser } from "@/redux/interfaces/user";
+import { UserDataRow } from "../../types";
 import { NextRouter } from "next/router";
 
-export interface IUserListProps {
-    users:Array<IUser>,
-    permissions:Array<string>,
-    roles:IRole[],
+export interface IDeleteUserModalProps{
+    isVisible:boolean,
+    handleClose:any,
     state:IRootState,
+    userId:string,
     router:NextRouter
 }

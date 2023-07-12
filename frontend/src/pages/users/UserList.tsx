@@ -10,13 +10,15 @@ import EditNoteIcon from "@mui/icons-material/EditNote";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import UpdateUserModal from "./modals/UpdateUserModal";
 import { IModalVisibles } from "./modals/interfaces/IModalVisibles";
+import DeleteUserModal from "./modals/DeleteUserModal";
 
-function UserList({ users, permissions, roles, state }: IUserListProps) {
-  const router = useRouter();
+function UserList({ users, permissions, roles, state, router }: IUserListProps) {
   const [modalVisibles, setModalVisibles] = useState<IModalVisibles>({
     isCreateModalVisible: false,
     isUpdateModalVisible: false,
     updatingUser: null,
+    isDeleteModalVisible: false,
+    deletingUserId: null
   });
 
   const columns: TableColumn<UserDataRow>[] = [
@@ -31,7 +33,7 @@ function UserList({ users, permissions, roles, state }: IUserListProps) {
     {
       name: "Rol",
       selector: (row) => {
-        if(permissions?.indexOf("get_roles") > -1){
+        if (permissions?.indexOf("get_roles") > -1) {
           return `${roles?.find((r: IRole) => r._id == row.roleId)?.name}`
         }
         else return 'Yetki Yok'
@@ -62,8 +64,8 @@ function UserList({ users, permissions, roles, state }: IUserListProps) {
               onClick={() => {
                 setModalVisibles({
                   ...modalVisibles,
-                  isUpdateModalVisible:true,
-                  updatingUser:row
+                  isUpdateModalVisible: true,
+                  updatingUser: row
                 })
               }}
             >
@@ -74,11 +76,21 @@ function UserList({ users, permissions, roles, state }: IUserListProps) {
             state.user.username != row.username ? (
               <span
                 className="font-bold py-2 px-4 rounded cursor-pointer"
-                onClick={() => {}}
+                onClick={() => {
+                  setModalVisibles({
+                    ...modalVisibles,
+                    isDeleteModalVisible: true,
+                    deletingUserId: row._id
+                  })
+                }}
               >
                 <DeleteOutlineIcon color="error" fontSize="small" />
               </span>
-            ) : null
+            ) : <span
+              className="font-bold py-2 px-4 rounded"
+            >
+              <DeleteOutlineIcon color="disabled" fontSize="small" />
+            </span>
           ) : null}
         </>
       ),
@@ -100,14 +112,25 @@ function UserList({ users, permissions, roles, state }: IUserListProps) {
     <>
       {modalVisibles.updatingUser ? (
         <UpdateUserModal
-        roles={roles}
+          roles={roles}
           state={state}
+          router={router}
           user={modalVisibles.updatingUser}
           isVisible={modalVisibles.isUpdateModalVisible}
           handleClose={closeUpdateUserModal}
         />
       ) : null}
+      {modalVisibles.deletingUserId ? (
+        <DeleteUserModal
+          state={state}
+          router={router}
+          userId={modalVisibles.deletingUserId}
+          isVisible={modalVisibles.isDeleteModalVisible}
+          handleClose={closeUpdateUserModal}
+        />
+      ) : null}
       <CreateUserModal
+        router={router}
         roles={roles}
         state={state}
         isVisible={modalVisibles.isCreateModalVisible}

@@ -12,14 +12,39 @@ import {
 import React, { useState } from "react";
 import { ICreateUpdateUserForm, ICreateUserModalProps } from "./interfaces";
 import { modalBoxStyle } from "@/variables";
-import createUser from "./functions";
+import { createUser } from "./functions";
 import { IRole } from "@/redux/interfaces/role/IRole";
+import { useFormik } from "formik";
+import * as Yup from "yup"
 
-function CreateUserModal({ isVisible, handleClose,roles,state }: ICreateUserModalProps) {
+function CreateUserModal({ isVisible, handleClose, roles, state, router }: ICreateUserModalProps) {
   const [createUserForm, setCreateUserForm] = useState<ICreateUpdateUserForm>({
+    _id: null,
     username: "",
     password: "",
     roleId: null,
+  });
+
+  const CreateUserSchema = Yup.object().shape({
+    username: Yup.string()
+      .min(2, "Too Short!")
+      .max(50, "Too Long!")
+      .required("Required"),
+    password: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("Required"),
+  });
+
+
+  const formik = useFormik({
+    initialValues: {
+      _id: null,
+      username: "",
+      password: "",
+      roleId: null,
+    },
+    validationSchema: CreateUserSchema,
+    onSubmit: (values: ICreateUpdateUserForm) => {
+      createUser(values, state, router)
+    },
   });
 
   return (
@@ -30,62 +55,71 @@ function CreateUserModal({ isVisible, handleClose,roles,state }: ICreateUserModa
             <h1 className="font-bold text-xl">Kullanıcı Ekle</h1>
           </div>
 
-          <FormControl fullWidth>
-            <TextField
-              variant="outlined"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setCreateUserForm({
-                  ...createUserForm,
-                  username: e.currentTarget.value,
-                });
-              }}
-              id="username-input"
-              aria-describedby="username-helper-text"
-            />
-          </FormControl>
-          <FormControl sx={{ marginTop: 2 }} fullWidth>
-            <TextField
-              variant="outlined"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setCreateUserForm({
-                  ...createUserForm,
-                  password: e.currentTarget.value,
-                });
-              }}
-              id="password-input"
-              aria-describedby="password-helper-text"
-            />
-          </FormControl>
-          <FormControl fullWidth sx={{marginTop:2}}>
-            <InputLabel id="demo-simple-select-label">Rol</InputLabel>
-            <Select
-
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={createUserForm.roleId}
-              label="Age"
-            >
-              {
-                roles?.map((role:IRole)=>{
-                  return <MenuItem onClick={()=>{
-                    setCreateUserForm({
-                      ...createUserForm,
-                      roleId:role._id
-                    })
-                  }} value={role._id}>{role.name}</MenuItem>
-                })
-              }
-            </Select>
-          </FormControl>
-          <Button
-            onClick={() => {
-              createUser(createUserForm,state);
-            }}
-            variant="contained"
-            sx={{ marginTop: 2 }}
-          >
-            Ekle
-          </Button>
+          <div>
+            <form onSubmit={formik.handleSubmit}>
+              <TextField
+                fullWidth
+                id="username"
+                name="username"
+                label="Username"
+                value={formik.values.username}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.touched.username && Boolean(formik.errors.username)
+                }
+                helperText={formik.touched.username && formik.errors.username}
+              />
+              <TextField
+                sx={{ marginTop: 2 }}
+                fullWidth
+                id="password"
+                name="password"
+                label="Password"
+                type="password"
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.touched.password && Boolean(formik.errors.password)
+                }
+                helperText={formik.touched.password && formik.errors.password}
+              />
+              <FormControl fullWidth sx={{ marginTop: 2 }}>
+                <InputLabel id="demo-simple-select-label">Rol</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={formik.values.roleId}
+                  label="Rol"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  error={
+                    formik.touched.password && Boolean(formik.errors.password)
+                  }
+                >
+                  {roles?.map((role: IRole) => {
+                    return (
+                      <MenuItem onClick={() => {
+                        formik.setFieldValue("roleId", role._id)
+                      }} value={role._id}>
+                        {role.name}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+              <Button
+                sx={{ marginTop: 2 }}
+                color="primary"
+                variant="contained"
+                fullWidth
+                type="submit"
+              >
+                Submit
+              </Button>
+            </form>
+          </div>
         </Box>
       </Modal>
     </>
