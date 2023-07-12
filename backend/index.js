@@ -19,6 +19,8 @@ const controlPermission = require("./helpers/controlPermission");
 const signUp = require("./controllers/user/signupController");
 const getUsers = require("./controllers/user/getUsersController");
 const getUserPermissions = require("./controllers/user/getUserPermissions");
+const getRoles = require("./controllers/role/getRolesController");
+const updateUser = require("./controllers/user/updateUserController");
 const JwtStrategy = require("passport-jwt").Strategy;
 require("./db"); // db.js dosyasını burada içe aktarın
 
@@ -32,7 +34,7 @@ passport.use(
     try {
       const user = await User.findById(payload.id);
 
-      if (payload.password == user.password) {
+      if (payload.password == user.password && payload.username == user.username) {
         user.roles = await getUserPermissionsFromDatabase(payload.roleId);
         if (user) {
           return done(null, user);
@@ -100,6 +102,14 @@ app.post(
   }
 );
 
+app.put(
+  "/updateUser/:userId",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    controlPermission(req, res, "update_user", updateUser);
+  }
+);
+
 app.post(
   "/createRole",
   passport.authenticate("jwt", { session: false }),
@@ -113,6 +123,22 @@ app.get(
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     getUserPermissions(req,res)
+  }
+);
+
+app.get(
+  "/getRoles",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    controlPermission(req,res,"get_roles",getRoles)
+  }
+);
+
+app.get(
+  "/isAuthorized",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    res.send(true)
   }
 );
 

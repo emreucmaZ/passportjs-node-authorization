@@ -1,5 +1,5 @@
-import { IUserState } from "./user/IUserState";
+import {IUserState } from "./user";
 
-export interface IRootState {
+export interface IRootState  {
     user: IUserState;
   }

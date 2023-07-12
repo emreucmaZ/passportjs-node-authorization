@@ -1,10 +1,10 @@
 import { ILoginForm } from "@/interfaces/ILoginForm";
-import { IUserAction } from "@/redux/interfaces/user/IUserAction";
 import { LOG_IN, LOG_OUT } from "@/redux/types/user/types";
 import { Dispatch } from "redux";
 import axios from "axios";
 import { REQUEST_URL } from "@/variables";
 import { ActionType } from "@/redux/types/ActionType";
+import { IUserAction } from "@/redux/interfaces/user";
 
 export function login (loginForm: ILoginForm) {
   return (dispatch: Dispatch<IUserAction>) => {
@@ -23,9 +23,7 @@ export function login (loginForm: ILoginForm) {
           }
         });
       })
-      .catch((error) => {
-        alert(error);
-      });
+      .catch((error) =>null);
   };
 };
 

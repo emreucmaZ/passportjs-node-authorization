@@ -12,23 +12,24 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
+import { isAuthorized } from "@/helpers";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const { pathname } = router;
 
-  // `pathname` değerini kullanabilirsiniz
   return (
     <>
       <ReduxProvider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           {store.getState().user.token ? (
-            pathname != "/login" ? (
-              <Layout Page={<Component {...pageProps} />} />
+             
+              pathname != "/login" ? (
+                <Layout Page={<Component {...pageProps} />} />
+              ) : (
+                <LoggedIn router={router} />
+              )
             ) : (
-              <LoggedIn router={router} />
-            )
-          ) : (
             <LoginPage />
           )}
         </PersistGate>

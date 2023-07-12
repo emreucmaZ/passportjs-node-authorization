@@ -8,11 +8,8 @@ export function getUserPermissions(state: IRootState, setState: any) {
       headers: { Authorization: `Bearer ${state.user.token}` },
     })
     .then((response) => {
-      console.log(response);
-      
       setState(response.data.permissions);
-    }).catch(err=>{
-      console.log(err);
-      
-    })
+      return response.data.permissions
+
+    }).catch(err=>null)
 }

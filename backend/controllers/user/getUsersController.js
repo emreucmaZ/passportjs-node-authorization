@@ -7,7 +7,7 @@ function getUsers(req,res){
         for (const user of result) {
             user.roles = await getUserPermissionsFromDatabase(user.roleId);
           }
-        sendResponse(true, "kullanicilar", result, res, 200);
+        sendResponse(true, "users", result, res, 200);
       });
 }
 

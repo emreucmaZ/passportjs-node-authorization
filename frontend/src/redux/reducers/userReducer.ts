@@ -1,5 +1,4 @@
-import { IUserAction } from "../interfaces/user/IUserAction";
-import {IUserState } from "../interfaces/user/IUserState";
+import { IUserAction, IUserState } from "../interfaces/user";
 import { LOG_IN, LOG_OUT } from "../types/user/types";
 
 const initialState: IUserState = {
