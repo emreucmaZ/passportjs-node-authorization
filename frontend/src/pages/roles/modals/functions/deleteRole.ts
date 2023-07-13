@@ -3,8 +3,8 @@ import { REQUEST_URL } from "@/variables";
 import axios from "axios";
 import { NextRouter } from "next/router";
 
-export default function deleteUser(userId:string,state:IRootState,handleClose:Function){
-    axios.delete(`${REQUEST_URL}/users/${userId}`,{
+export default function deleteRole(roleId:string,state:IRootState,handleClose:Function){
+    axios.delete(`${REQUEST_URL}/roles/${roleId}`,{
         headers:{
             'Authorization':`Bearer ${state.user.token}`
         }

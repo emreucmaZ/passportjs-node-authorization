@@ -22,6 +22,8 @@ const getUserPermissions = require("./controllers/user/getUserPermissions");
 const getRoles = require("./controllers/role/getRolesController");
 const updateUser = require("./controllers/user/updateUserController");
 const deleteUser = require("./controllers/user/deleteUserController");
+const updateRole = require("./controllers/role/updateRoleController");
+const deleteRole = require("./controllers/role/deleteRoleController");
 const JwtStrategy = require("passport-jwt").Strategy;
 require("./db"); // db.js dosyasını burada içe aktarın
 
@@ -91,42 +93,42 @@ app.post("/login", (req, res) => loginController(req, res));
 app.post("/signup", (req, res) => signUp(req, res));
 
 app.get(
-  "/getUsers",
+  "/users",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    controlPermission(req, res, "get_users", getUsers);
+    controlPermission(req, res,"superadmin", getUsers);
   }
 );
 
 app.post(
-  "/createUser",
+  "/users",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    controlPermission(req, res, "create_user", createUser);
+    controlPermission(req, res, "superadmin", createUser);
   }
 );
 
 app.put(
-  "/updateUser/:userId",
+  "/users/:userId",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    controlPermission(req, res, "update_user", updateUser);
+    controlPermission(req, res, "superadmin", updateUser);
   }
 );
 
 app.delete(
-  "/deleteUser/:userId",
+  "/users/:userId",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    controlPermission(req, res, "delete_user", deleteUser);
+    controlPermission(req, res, "superadmin", deleteUser);
   }
 );
 
 app.post(
-  "/createRole",
+  "/roles",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    controlPermission(req, res, "create_role", createRole);
+    controlPermission(req, res, "superadmin", createRole);
   }
 );
 
@@ -139,10 +141,26 @@ app.get(
 );
 
 app.get(
-  "/getRoles",
+  "/roles",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    controlPermission(req, res, "get_roles", getRoles);
+    controlPermission(req, res, "superadmin", getRoles);
+  }
+);
+
+app.put(
+  "/roles/:roleId",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    controlPermission(req, res, "superadmin", updateRole);
+  }
+);
+
+app.delete(
+  "/roles/:roleId",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    controlPermission(req, res, "superadmin", deleteRole);
   }
 );
 

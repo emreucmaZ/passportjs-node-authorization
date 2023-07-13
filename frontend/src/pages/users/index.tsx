@@ -15,42 +15,52 @@ function Users() {
   const [users, setUsers] = useState<IUser[]>([]);
   const [roles, setRoles] = useState<IRole[]>([]);
   const [permissions, setPermissions] = useState<string[]>([]);
+  const [refreshWhenDataChange, setRefreshWhenDataChange] = useState();
 
   useEffect(() => {
     function getUsers() {
       axios
-        .get(REQUEST_URL + "/getUsers", {
+        .get(REQUEST_URL + "/users", {
           headers: {
             Authorization: `Bearer ${state.user.token}`,
           },
         })
         .then((response) => {
           setUsers(response.data.users);
-        }).catch(err => null);
+        })
+        .catch((err) => null);
     }
     function getRoles() {
       axios
-        .get(REQUEST_URL + "/getRoles", {
+        .get(REQUEST_URL + "/roles", {
           headers: {
             Authorization: `Bearer ${state.user.token}`,
           },
         })
         .then((response) => {
           setRoles(response.data.roles);
-        }).catch(err => null);
+        })
+        .catch((err) => null);
     }
 
     return () => {
-      getUserPermissions(state, setPermissions)
+      getUserPermissions(state, setPermissions);
       getUsers();
       getRoles();
     };
-  }, []);
+  }, [refreshWhenDataChange]);
 
   return (
     <>
       <div>Users</div>
-      <UserList state={state} users={users} permissions={permissions} roles={roles} router={router} />
+      <UserList
+        setRefreshWhenDataChange={setRefreshWhenDataChange}
+        state={state}
+        users={users}
+        permissions={permissions}
+        roles={roles}
+        router={router}
+      />
     </>
   );
 }

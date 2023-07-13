@@ -16,24 +16,9 @@ import { createUser } from "./functions";
 import { IRole } from "@/redux/interfaces/role/IRole";
 import { useFormik } from "formik";
 import * as Yup from "yup"
+import { CreateUserSchema } from "../schemas/CreateUserSchema";
 
-function CreateUserModal({ isVisible, handleClose, roles, state, router }: ICreateUserModalProps) {
-  const [createUserForm, setCreateUserForm] = useState<ICreateUpdateUserForm>({
-    _id: null,
-    username: "",
-    password: "",
-    roleId: null,
-  });
-
-  const CreateUserSchema = Yup.object().shape({
-    username: Yup.string()
-      .min(2, "Too Short!")
-      .max(50, "Too Long!")
-      .required("Required"),
-    password: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("Required"),
-  });
-
-
+function CreateUserModal({ isVisible, handleClose, roles, state,router }: ICreateUserModalProps) {
   const formik = useFormik({
     initialValues: {
       _id: null,
@@ -43,7 +28,7 @@ function CreateUserModal({ isVisible, handleClose, roles, state, router }: ICrea
     },
     validationSchema: CreateUserSchema,
     onSubmit: (values: ICreateUpdateUserForm) => {
-      createUser(values, state, router)
+      createUser(values, state, handleClose)
     },
   });
 

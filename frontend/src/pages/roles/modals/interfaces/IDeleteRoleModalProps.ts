@@ -1,11 +1,10 @@
 import { IRootState } from "@/redux/interfaces/IRootState";
-import { IRole } from "@/redux/interfaces/role/IRole";
 import { NextRouter } from "next/router";
 
-export interface ICreateUserModalProps{
+export interface IDeleteRoleModalProps{
     isVisible:boolean,
     handleClose:any,
-    roles:IRole[],
     state:IRootState,
-    router:NextRouter,
+    roleId:string,
+    router:NextRouter
 }

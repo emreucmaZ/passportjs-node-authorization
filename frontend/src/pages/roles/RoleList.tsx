@@ -1,50 +1,45 @@
 import React, { useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
-import { IUserListProps } from "./interfaces";
-import { UserDataRow } from "./types";
+import { IRoleListProps } from "./interfaces";
+import { RoleDataRow } from "./types";
 import { Button } from "@mui/material";
-import CreateUserModal from "./modals/CreateUserModal";
-import { useRouter } from "next/router";
-import { IRole } from "@/redux/interfaces/role/IRole";
+import CreateRoleModal from "./modals/CreateRoleModal";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import UpdateUserModal from "./modals/UpdateUserModal";
+import UpdateRoleModal from "./modals/UpdateRoleModal";
 import { IModalVisibles } from "./modals/interfaces/IModalVisibles";
-import DeleteUserModal from "./modals/DeleteUserModal";
+import DeleteRoleModal from "./modals/DeleteRoleModal";
 
-function UserList({ users, permissions, roles, state, router,setRefreshWhenDataChange}: IUserListProps) {
+function RoleList({
+  roles,
+  permissions,
+  state,
+  router,
+  setRefreshWhenDataChange,
+}: IRoleListProps) {
   const [modalVisibles, setModalVisibles] = useState<IModalVisibles>({
     isCreateModalVisible: false,
     isUpdateModalVisible: false,
-    updatingUser: null,
+    updatingRole: null,
     isDeleteModalVisible: false,
-    deletingUserId: null
+    deletingRoleId: null,
   });
 
-  const columns: TableColumn<UserDataRow>[] = [
+  const columns: TableColumn<RoleDataRow>[] = [
     {
-      name: "User Id",
+      name: "Role Id",
       selector: (row) => row._id,
     },
     {
-      name: "Username",
-      selector: (row) => row.username,
-    },
-    {
-      name: "Rol",
-      selector: (row) => {
-        if (permissions?.indexOf("superadmin") > -1) {
-          return `${roles?.find((r: IRole) => r._id == row.roleId)?.name}`
-        }
-        else return 'Yetki Yok'
-      }
+      name: "Role Name",
+      selector: (row) => row.name,
     },
     {
       name:
         permissions?.indexOf("superadmin") > -1 ? (
           <Button
             variant="contained"
-            onClick={async () => {
+            onClick={() => {
               setRefreshWhenDataChange(Math.random() * 91238);
               setModalVisibles({
                 ...modalVisibles,
@@ -52,7 +47,7 @@ function UserList({ users, permissions, roles, state, router,setRefreshWhenDataC
               });
             }}
           >
-            Kullanıcı Ekle
+            Rol Ekle
           </Button>
         ) : (
           "Actions"
@@ -62,38 +57,38 @@ function UserList({ users, permissions, roles, state, router,setRefreshWhenDataC
           {permissions?.indexOf("superadmin") > -1 ? (
             <span
               className="font-bold py-2 px-4 rounded cursor-pointer"
-              onClick={async () => {
+              onClick={() => {
                 setRefreshWhenDataChange(Math.random() * 91238);
                 setModalVisibles({
                   ...modalVisibles,
                   isUpdateModalVisible: true,
-                  updatingUser: row
-                })
+                  updatingRole: row,
+                });
               }}
             >
               <EditNoteIcon color="inherit" fontSize="small" />
             </span>
           ) : null}
           {permissions?.indexOf("superadmin") > -1 ? (
-            state.user.username != row.username ? (
+            state.user.roleId != row._id ? (
               <span
                 className="font-bold py-2 px-4 rounded cursor-pointer"
-                onClick={async () => {
+                onClick={() => {
                   setRefreshWhenDataChange(Math.random() * 91238);
                   setModalVisibles({
                     ...modalVisibles,
                     isDeleteModalVisible: true,
-                    deletingUserId: row._id
-                  })
+                    deletingRoleId: row._id,
+                  });
                 }}
               >
                 <DeleteOutlineIcon color="error" fontSize="small" />
               </span>
-            ) : <span
-              className="font-bold py-2 px-4 rounded"
-            >
-              <DeleteOutlineIcon color="disabled" fontSize="small" />
-            </span>
+            ) : (
+              <span className="font-bold py-2 px-4 rounded">
+                <DeleteOutlineIcon color="disabled" fontSize="small" />
+              </span>
+            )
           ) : null}
         </>
       ),
@@ -103,7 +98,7 @@ function UserList({ users, permissions, roles, state, router,setRefreshWhenDataC
     },
   ];
 
-  const closeCreateUserModal = () => {
+  const closeCreateRoleModal = () => {
     setRefreshWhenDataChange(Math.random() * 91238);
     setModalVisibles({
       ...modalVisibles,
@@ -111,51 +106,49 @@ function UserList({ users, permissions, roles, state, router,setRefreshWhenDataC
     });
   };
 
-  const closeUpdateUserModal = () => {
+  const closeUpdateRoleModal = () => {
     setRefreshWhenDataChange(Math.random() * 91238);
     setModalVisibles({
       ...modalVisibles,
       isUpdateModalVisible: false,
-      updatingUser: null,
+      updatingRole: null,
     });
   };
 
-  const closeDeleteUserModal = () => {
+  const closeDeleteRoleModal = () => {
     setRefreshWhenDataChange(Math.random() * 91238);
     setModalVisibles({
       ...modalVisibles,
       isDeleteModalVisible: false,
-      deletingUserId: null,
+      deletingRoleId: null,
     });
   };
 
   return (
     <>
-      {modalVisibles.updatingUser ? (
-        <UpdateUserModal
-          router={router}
-          roles={roles}
+      {modalVisibles.updatingRole ? (
+        <UpdateRoleModal
           state={state}
-          user={modalVisibles.updatingUser}
+          router={router}
+          role={modalVisibles.updatingRole}
           isVisible={modalVisibles.isUpdateModalVisible}
-          handleClose={closeUpdateUserModal}
+          handleClose={closeUpdateRoleModal}
         />
       ) : null}
-      {modalVisibles.deletingUserId ? (
-        <DeleteUserModal
-          router={router}
+      {modalVisibles.deletingRoleId ? (
+        <DeleteRoleModal
           state={state}
-          userId={modalVisibles.deletingUserId}
+          router={router}
+          roleId={modalVisibles.deletingRoleId}
           isVisible={modalVisibles.isDeleteModalVisible}
-          handleClose={closeDeleteUserModal}
+          handleClose={closeDeleteRoleModal}
         />
       ) : null}
-      <CreateUserModal
+      <CreateRoleModal
         router={router}
-        roles={roles}
         state={state}
         isVisible={modalVisibles.isCreateModalVisible}
-        handleClose={closeCreateUserModal}
+        handleClose={closeCreateRoleModal}
       />
       <div>
         <DataTable
@@ -164,11 +157,11 @@ function UserList({ users, permissions, roles, state, router,setRefreshWhenDataC
           pagination
           responsive
           columns={columns}
-          data={users}
+          data={roles}
         />
       </div>
     </>
   );
 }
 
-export default UserList;
+export default RoleList;

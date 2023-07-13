@@ -4,25 +4,23 @@ import {
     Modal
 } from "@mui/material";
 import React, { useState } from "react";
-import { ICreateUpdateUserForm, ICreateUserModalProps, IDeleteUserModalProps } from "./interfaces";
 import { modalBoxStyle } from "@/variables";
-import { createUser, deleteUser } from "./functions";
-import { IRole } from "@/redux/interfaces/role/IRole";
-import { useFormik } from "formik";
 import * as Yup from "yup"
+import { IDeleteRoleModalProps } from "./interfaces";
+import deleteRole from "./functions/deleteRole";
 
-function DeleteUserModal({ isVisible, handleClose, state, userId,router}: IDeleteUserModalProps) {
+function DeleteRoleModal({ isVisible, handleClose, state, router, roleId }: IDeleteRoleModalProps) {
     return (
         <>
             <Modal open={isVisible} onClose={handleClose}>
                 <Box sx={modalBoxStyle}>
                     <div className="mb-8">
-                        <h1 className="font-bold text-xl">Kullanıcı Sil</h1>
+                        <h1 className="font-bold text-xl">Rolü Sil</h1>
                     </div>
 
                     <div>
-                        <Button color="error" onClick={() => {
-                            deleteUser(userId, state, handleClose);
+                        <Button color="error" variant="contained" onClick={() => {
+                            deleteRole(roleId, state, handleClose);
                         }}>
                             Kullanıcıyı Sil
                         </Button>
@@ -33,4 +31,4 @@ function DeleteUserModal({ isVisible, handleClose, state, userId,router}: IDelet
     );
 }
 
-export default DeleteUserModal;
+export default DeleteRoleModal;

@@ -7,7 +7,6 @@ async function controlPermission(req,res,roleName,controller){
       controller(req, res);
     } else {
       return sendResponse(false,"message","Yetkilendirme hatası. Gerekli yetkiye sahip değilsiniz." ,res,403)
-
     }
 }
 

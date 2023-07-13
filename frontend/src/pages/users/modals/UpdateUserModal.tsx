@@ -16,6 +16,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { IRole } from "@/redux/interfaces/role/IRole";
 import updateUser from "./functions/updateUser";
+import { UpdateUserSchema } from "../schemas/UpdateUserSchema";
 
 function UpdateUserModal({
   handleClose,
@@ -23,22 +24,14 @@ function UpdateUserModal({
   user,
   state,
   roles,
-  router
+  router,
 }: IUpdateUserModalProps) {
   const initialValues: ICreateUpdateUserForm = {
     _id: user._id,
     username: user.username,
     password: "",
-    roleId: user.roleId
-  };
-  const UpdateUserSchema = Yup.object().shape({
-    username: Yup.string()
-      .min(2, "Too Short!")
-      .max(50, "Too Long!")
-      .required("Required"),
-    password: Yup.string().min(2, "Too Short!").max(50, "Too Long!"),
-    roleId: Yup.string().required("Required"),
-  });
+    roleId: user.roleId,
+  };  
 
   const formik = useFormik({
     initialValues: {
@@ -49,7 +42,7 @@ function UpdateUserModal({
     },
     validationSchema: UpdateUserSchema,
     onSubmit: (values: ICreateUpdateUserForm) => {
-      updateUser(values, state, router)
+      updateUser(values, state, handleClose);
     },
   });
 
@@ -98,9 +91,12 @@ function UpdateUserModal({
                 >
                   {roles?.map((role: IRole) => {
                     return (
-                      <MenuItem onClick={() => {
-                        formik.setFieldValue("roleId", role._id)
-                      }} value={role._id}>
+                      <MenuItem
+                        onClick={() => {
+                          formik.setFieldValue("roleId", role._id);
+                        }}
+                        value={role._id}
+                      >
                         {role.name}
                       </MenuItem>
                     );

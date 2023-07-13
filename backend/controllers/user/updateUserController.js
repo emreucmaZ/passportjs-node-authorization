@@ -10,10 +10,7 @@ function updateUser(req, res) {
     if (updatedUser.password == "" && updateUser.password == null) {
       User.findByIdAndUpdate(req.params.userId, {
         username: req.body.username,
-        roleId:
-          req.user?.roles?.indexOf("get_roles") > -1
-            ? req.body.roleId
-            : user.roleId,
+        roleId:req.body.roleId
       }).then((response) => {
         sendResponse(true, "oldUser", response, res, 200);
       });

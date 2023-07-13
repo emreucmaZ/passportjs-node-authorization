@@ -1,22 +1,22 @@
 import axios from "axios";
-import { ICreateUpdateUserForm } from "../interfaces";
 import { REQUEST_URL } from "@/variables";
 import { IRootState } from "@/redux/interfaces/IRootState";
 import { NextRouter } from "next/router";
+import { ICreateUpdateRoleForm } from "../interfaces";
 
-export default function updateUser(
-  updateUserForm: ICreateUpdateUserForm,
+export default function updateRole(
+  updateRoleForm: ICreateUpdateRoleForm,
   state: IRootState,
   handleClose:Function
 ) {
   axios
-    .put(`${REQUEST_URL}/users/${updateUserForm._id}`, updateUserForm, {
+    .put(`${REQUEST_URL}/roles/${updateRoleForm._id}`, updateRoleForm, {
       headers: {
         Authorization: `Bearer  ${state.user.token}`,
       },
     })
     .then((response) => {
-      handleClose()
+      handleClose();
     });
 }
 
