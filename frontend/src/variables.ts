@@ -17,4 +17,5 @@ export const permissionList: IPermission[] = [
   { value: "superadmin", label: "Süper Admin" },
   { value: "add_menu", label: "Menü Ekleme" },
   { value: "delete_menu", label: "Menü Silme" },
+  { value: "create_blog", label: "Blog Ekleme" },
 ];

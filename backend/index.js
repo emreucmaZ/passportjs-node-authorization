@@ -24,6 +24,7 @@ const updateUser = require("./controllers/user/updateUserController");
 const deleteUser = require("./controllers/user/deleteUserController");
 const updateRole = require("./controllers/role/updateRoleController");
 const deleteRole = require("./controllers/role/deleteRoleController");
+const upload = require("./multerStorage");
 const JwtStrategy = require("passport-jwt").Strategy;
 require("./db"); // db.js dosyasını burada içe aktarın
 
@@ -96,7 +97,7 @@ app.get(
   "/users",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    controlPermission(req, res,"superadmin", getUsers);
+    controlPermission(req, res, "superadmin", getUsers);
   }
 );
 
@@ -169,6 +170,27 @@ app.get(
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     res.send(true);
+  }
+);
+
+app.post(
+  "/image",
+  passport.authenticate("jwt", { session: false }),
+  (req, res, next) => {
+    if (req.user.roles.includes("create_blog")) {
+      upload.single("image")(req, res, (err) => {
+        if (err) {
+          return res.status(400).json({ error: err.message });
+        }
+        
+        next();
+      });
+    }else{
+      res.status(403).json({durum:false,message:"Yetkilendirme Hatası"})
+    }
+  },
+  (req, res) => {
+    res.json({ durum: true, message: req.body.title });
   }
 );
 
