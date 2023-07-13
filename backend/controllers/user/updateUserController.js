@@ -1,7 +1,9 @@
 const sendResponse = require("../../helpers/sendResponse");
 const User = require("../../models/userModel");
 const bcrypt = require("bcrypt");
+const logger = require("../logger/logger");
 
+const myLogger = logger();
 function updateUser(req, res) {
   const { username, password, roleId } = req.body;
   const updatedUser = { username, password, roleId };
@@ -10,8 +12,11 @@ function updateUser(req, res) {
     if (updatedUser.password == "" && updateUser.password == null) {
       User.findByIdAndUpdate(req.params.userId, {
         username: req.body.username,
-        roleId:req.body.roleId
+        roleId: req.body.roleId,
+        password:user.password
       }).then((response) => {
+        updatedUser.password = user.password
+        myLogger.logUpdateAction(req.user, "users", updatedUser, response);
         sendResponse(true, "oldUser", response, res, 200);
       });
     } else {
@@ -26,7 +31,9 @@ function updateUser(req, res) {
             password: hash,
             roleId: req.body.roleId,
           }).then((response) => {
-            sendResponse(true, "updatedUser", response, res, 200);
+            updatedUser.password = hash;
+            myLogger.logUpdateAction(req.user, "users", updatedUser, response);
+            sendResponse(true, "oldUser", response, res, 200);
           });
         });
       });

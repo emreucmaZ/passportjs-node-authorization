@@ -1,10 +1,13 @@
 const sendResponse = require("../../helpers/sendResponse");
 const User = require("../../models/userModel");
+const logger = require('../logger/logger');
 
+const myLogger = logger();
 async function deleteUser(req, res) {
   if (req.user._id != req.params.userId) {
     User.findByIdAndDelete(req.params.userId)
       .then((response) => {
+        myLogger.logDeleteAction(req.user,"users",response)
         sendResponse(true, "message", "Kullanıcı Silindi", res, 204);
       })
       .catch((err) => {

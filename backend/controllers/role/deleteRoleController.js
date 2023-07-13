@@ -1,10 +1,13 @@
 const sendResponse = require("../../helpers/sendResponse");
 const Role = require("../../models/roleModel");
+const logger = require('../logger/logger');
 
+const myLogger = logger();
 async function deleteRole(req, res) {
   if (req.user.roleId != req.params.roleId) {
     Role.findByIdAndDelete(req.params.roleId)
       .then((response) => {
+        myLogger.logDeleteAction(req.user,"roles",response)
         sendResponse(true, "message", "Rol Silindi", res, 204);
       })
       .catch((err) => {

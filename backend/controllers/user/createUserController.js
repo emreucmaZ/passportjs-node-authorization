@@ -1,10 +1,15 @@
 const sendResponse = require("../../helpers/sendResponse");
 const User = require("../../models/userModel");
 const bcrypt = require("bcrypt");
+const logger = require("../logger/logger");
 
+const myLogger = logger();
 function createUser(req, res) {
-  const newUser = new User(req.body);
-
+  const newUser = new User({
+    password: req.body.password,
+    username: req.body.username,
+    roleId: req.body.roleId,
+  });
   bcrypt.genSalt(10, function (err, salt) {
     bcrypt.hash(newUser.password, salt, async function (err, hash) {
       if (err) {
@@ -18,10 +23,11 @@ function createUser(req, res) {
       newUser
         .save()
         .then((savedUser) => {
+          myLogger.logCreateAction(req.user, "users", savedUser);
           return sendResponse(
             true,
             "message",
-            "Yeni kullanıcı kaydedildi:" + savedUser,
+            "Yeni kullanıcı kaydedildi",
             res
           );
         })
@@ -29,7 +35,7 @@ function createUser(req, res) {
           return sendResponse(
             false,
             "message",
-            "Kullanıcı kaydetme hatası:" + error,
+            "Kullanıcı kaydetme hatası: " + error,
             res
           );
         });
