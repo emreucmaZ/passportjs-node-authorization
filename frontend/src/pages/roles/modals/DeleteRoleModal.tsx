@@ -22,7 +22,7 @@ function DeleteRoleModal({ isVisible, handleClose, state, router, roleId }: IDel
                         <Button color="error" variant="contained" onClick={() => {
                             deleteRole(roleId, state, handleClose);
                         }}>
-                            Kullanıcıyı Sil
+                            Rolü Sil
                         </Button>
                     </div>
                 </Box>

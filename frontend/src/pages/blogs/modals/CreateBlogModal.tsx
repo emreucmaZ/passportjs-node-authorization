@@ -10,25 +10,26 @@ import {
   MenuItem,
 } from "@mui/material";
 import React, { useState } from "react";
-import { ICreateUpdateUserForm, ICreateUserModalProps } from "./interfaces";
-import { modalBoxStyle } from "@/variables";
-import { createUser } from "./functions";
+import { ICreateUpdateBlogForm, ICreateBlogModalProps } from "./interfaces";
+import { REQUEST_URL, modalBoxStyle } from "@/variables";
+import { createBlog } from "./functions";
 import { IRole } from "@/redux/interfaces/role/IRole";
 import { useFormik } from "formik";
 import * as Yup from "yup"
-import { CreateUserSchema } from "../schemas/CreateUserSchema";
+import { CreateBlogSchema } from "../schemas/CreateBlogSchema";
+import { IImage } from "@/pages/images/interfaces/IImage";
 
-function CreateUserModal({ isVisible, handleClose, roles, state,router }: ICreateUserModalProps) {
+function CreateBlogModal({ isVisible, handleClose, state,images }: ICreateBlogModalProps) {
   const formik = useFormik({
     initialValues: {
-      _id: null,
-      username: "",
-      password: "",
-      roleId: null,
+      _id: "",
+      title: "",
+      content: "",
+      blogImageName: "",
     },
-    validationSchema: CreateUserSchema,
-    onSubmit: (values: ICreateUpdateUserForm) => {
-      createUser(values, state, handleClose)
+    validationSchema: CreateBlogSchema,
+    onSubmit: (values: ICreateUpdateBlogForm) => {
+      createBlog(values, state, handleClose)
     },
   });
 
@@ -44,51 +45,52 @@ function CreateUserModal({ isVisible, handleClose, roles, state,router }: ICreat
             <form onSubmit={formik.handleSubmit}>
               <TextField
                 fullWidth
-                id="username"
-                name="username"
-                label="Username"
-                value={formik.values.username}
+                id="title"
+                name="title"
+                label="title"
+                value={formik.values.title}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 error={
-                  formik.touched.username && Boolean(formik.errors.username)
+                  formik.touched.title && Boolean(formik.errors.title)
                 }
-                helperText={formik.touched.username && formik.errors.username}
+                helperText={formik.touched.title && formik.errors.title}
               />
               <TextField
                 sx={{ marginTop: 2 }}
                 fullWidth
-                id="password"
-                name="password"
-                label="Password"
-                type="password"
-                value={formik.values.password}
+                id="content"
+                name="content"
+                label="content"
+                type="content"
+                value={formik.values.content}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 error={
-                  formik.touched.password && Boolean(formik.errors.password)
+                  formik.touched.content && Boolean(formik.errors.content)
                 }
-                helperText={formik.touched.password && formik.errors.password}
+                helperText={formik.touched.content && formik.errors.content}
               />
               <FormControl fullWidth sx={{ marginTop: 2 }}>
-                <InputLabel id="demo-simple-select-label">Rol</InputLabel>
+                <InputLabel id="demo-simple-select-label">Blog Resmi</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={formik.values.roleId}
-                  label="Rol"
+                  value={formik.values.blogImageName}
+                  label="Blog Resmi"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   error={
-                    formik.touched.roleId && Boolean(formik.errors.roleId)
+                    formik.touched.blogImageName && Boolean(formik.errors.blogImageName)
                   }
                 >
-                  {roles?.map((role: IRole) => {
+                  {images?.map((image: IImage) => {
                     return (
                       <MenuItem onClick={() => {
-                        formik.setFieldValue("roleId", role._id)
-                      }} value={role._id}>
-                        {role.name}
+                        formik.setFieldValue("blogImageName", image.filename)
+                      }} value={image.filename}>
+                        <img src={`${REQUEST_URL}/public/images/${image.filename}`} width={30} height={30} />
+                        {image.title}
                       </MenuItem>
                     );
                   })}
@@ -111,4 +113,4 @@ function CreateUserModal({ isVisible, handleClose, roles, state,router }: ICreat
   );
 }
 
-export default CreateUserModal;
+export default CreateBlogModal;

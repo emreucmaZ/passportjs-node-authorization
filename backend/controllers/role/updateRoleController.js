@@ -15,6 +15,9 @@ function updateRole(req, res) {
       }).then((response) => {
         myLogger.logUpdateAction(req.user,"roles",updatedRole,response)
         sendResponse(true, "oldRole", response, res, 200);
+      }).catch((err)=>{
+        sendResponse(false, "message", "Böyle Bir rol var", res, 200);
+
       });
     
   });

@@ -4,14 +4,11 @@ import {
     Modal
 } from "@mui/material";
 import React, { useState } from "react";
-import { ICreateUpdateUserForm, ICreateUserModalProps, IDeleteUserModalProps } from "./interfaces";
+import { IDeleteBlogModalProps } from "./interfaces";
 import { modalBoxStyle } from "@/variables";
-import { createUser, deleteUser } from "./functions";
-import { IRole } from "@/redux/interfaces/role/IRole";
-import { useFormik } from "formik";
-import * as Yup from "yup"
+import { deleteBlog } from "./functions";
 
-function DeleteUserModal({ isVisible, handleClose, state, userId,router}: IDeleteUserModalProps) {
+function DeleteBlogModal({ isVisible, handleClose, state, blogId,router}: IDeleteBlogModalProps) {
     return (
         <>
             <Modal open={isVisible} onClose={handleClose}>
@@ -22,9 +19,9 @@ function DeleteUserModal({ isVisible, handleClose, state, userId,router}: IDelet
 
                     <div>
                         <Button variant="contained" color="error" onClick={() => {
-                            deleteUser(userId, state, handleClose);
+                            deleteBlog(blogId, state, handleClose);
                         }}>
-                            Kullanıcıyı Sil
+                            Blog Yazısını Sil
                         </Button>
                     </div>
                 </Box>
@@ -33,4 +30,4 @@ function DeleteUserModal({ isVisible, handleClose, state, userId,router}: IDelet
     );
 }
 
-export default DeleteUserModal;
+export default DeleteBlogModal;

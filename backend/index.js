@@ -32,6 +32,9 @@ const getImages = require("./controllers/images/getImagesController");
 const path = require("path");
 const createBlog = require("./controllers/blogs/createBlogController");
 const Image = require("./models/imageModel");
+const getBlogs = require("./controllers/blogs/getBlogsController");
+const updateBlog = require("./controllers/blogs/updateBlogController");
+const deleteBlog = require("./controllers/blogs/deteBlogController");
 const JwtStrategy = require("passport-jwt").Strategy;
 require("./db"); // db.js dosyasını burada içe aktarın
 
@@ -181,11 +184,35 @@ app.get(
   }
 );
 
+app.get(
+  "/blogs",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    controlPermission(req,res,"get_blogs",getBlogs)
+  }
+);
+
 app.post(
   "/blogs",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     controlPermission(req,res,"create_blog",createBlog)
+  }
+);
+
+app.put(
+  "/blogs/:blogId",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    controlPermission(req,res,"update_blog",updateBlog)
+  }
+);
+
+app.delete(
+  "/blogs/:blogId",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    controlPermission(req,res,"delete_blog",deleteBlog)
   }
 );
 
