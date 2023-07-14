@@ -1,3 +1,4 @@
-const DIR = "../images";
+const DIR = "public/images";
+
 
 module.exports = { DIR };

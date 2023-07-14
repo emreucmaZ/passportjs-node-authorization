@@ -18,4 +18,6 @@ export const permissionList: IPermission[] = [
   { value: "add_menu", label: "Menü Ekleme" },
   { value: "delete_menu", label: "Menü Silme" },
   { value: "create_blog", label: "Blog Ekleme" },
+  { value: "upload_image", label: "Resim Ekleme" },
+  { value: "get_images", label: "Resim Çekme" },
 ];

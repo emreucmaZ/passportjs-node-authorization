@@ -24,7 +24,14 @@ const updateUser = require("./controllers/user/updateUserController");
 const deleteUser = require("./controllers/user/deleteUserController");
 const updateRole = require("./controllers/role/updateRoleController");
 const deleteRole = require("./controllers/role/deleteRoleController");
-const upload = require("./multerStorage");
+const { upload } = require("./multerStorage");
+const bodyParser = require("body-parser");
+const { default: slugify } = require("slugify");
+const { DIR } = require("./variables");
+const getImages = require("./controllers/images/getImagesController");
+const path = require("path");
+const createBlog = require("./controllers/blogs/createBlogController");
+const Image = require("./models/imageModel");
 const JwtStrategy = require("passport-jwt").Strategy;
 require("./db"); // db.js dosyasını burada içe aktarın
 
@@ -77,8 +84,9 @@ app.use(function (req, res, next) {
   next();
 });
 
+app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(
   session({
     secret: getSecretKey(),
@@ -174,25 +182,43 @@ app.get(
 );
 
 app.post(
-  "/image",
+  "/blogs",
   passport.authenticate("jwt", { session: false }),
-  (req, res, next) => {
-    if (req.user.roles.includes("create_blog")) {
+  async (req, res) => {
+    controlPermission(req,res,"create_blog",createBlog)
+  }
+);
+
+app.post(
+  "/images",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    if (req.user.roles.includes("upload_image")) {
       upload.single("image")(req, res, (err) => {
         if (err) {
           return res.status(400).json({ error: err.message });
         }
-        
-        next();
+        const newImage = new Image({
+            title: req.body.title,
+            filename:slugify(req.file.originalname,{lower:true})
+        })
+        newImage.save().catch(err=>console.log(err))
+        res.send('Upload')
       });
-    }else{
-      res.status(403).json({durum:false,message:"Yetkilendirme Hatası"})
+    } else {
+      res.status(403).json({ durum: false, message: "Yetkilendirme Hatası" });
     }
-  },
-  (req, res) => {
-    res.json({ durum: true, message: req.body.title });
   }
 );
+
+app.get(
+  "/images",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    controlPermission(req,res,"get_images",getImages)
+  }
+);
+
 
 app.listen(5002, () => {
   console.log("Sunucu 5002 numaralı portta çalışıyor...");

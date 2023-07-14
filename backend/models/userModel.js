@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const userSchema = new mongoose.Schema({
   _id: {
     type: mongoose.Schema.Types.ObjectId,
-    auto: true, // Otomatik _id oluşturmayı devre dışı bırakır
+    auto: true
   },
   username: { type: String, unique: true },
   password: String,

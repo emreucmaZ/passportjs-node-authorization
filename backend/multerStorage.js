@@ -1,13 +1,14 @@
 const multer = require("multer");
 const { DIR } = require("./variables");
 const { default: slugify } = require("slugify");
+const Image = require("./models/imageModel");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, DIR);
   },
   filename: (req, file, cb) => {
-    const fileName = slugify(file.originalname);
+    const fileName = slugify(file.originalname, { lower: true });
     cb(null, fileName);
   },
 });
@@ -27,4 +28,4 @@ var upload = multer({
   },
 });
 
-module.exports = upload;
+module.exports = { upload, storage };
