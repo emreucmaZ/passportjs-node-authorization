@@ -17,7 +17,6 @@ const updateUser = require("./controllers/user/updateUserController");
 const deleteUser = require("./controllers/user/deleteUserController");
 const updateRole = require("./controllers/role/updateRoleController");
 const deleteRole = require("./controllers/role/deleteRoleController");
-const { DIR } = require("./variables");
 const getImages = require("./controllers/images/getImagesController");
 const path = require("path");
 const createBlog = require("./controllers/blogs/createBlogController");
@@ -28,12 +27,12 @@ const JwtStrategy = require("passport-jwt").Strategy;
 require("./db"); // db.js dosyasını burada içe aktarın
 const logger = require("./controllers/logger/logger");
 const uploadImage = require("./controllers/images/uploadImage");
-const fs = require("fs");
-const Image = require("./models/imageModel");
-const sendResponse = require("./helpers/sendResponse");
 const deleteImage = require("./controllers/images/deleteImage");
+const getMenus = require("./controllers/menus/getMenusController");
+const createMenu = require("./controllers/menus/createMenuController");
+const updateMenu = require("./controllers/menus/updateMenuController");
+const deleteMenu = require("./controllers/menus/deleteMenuController");
 
-const myLogger = logger();
 const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: getSecretKey(),
@@ -43,7 +42,6 @@ passport.use(
   new JwtStrategy(options, async (payload, done) => {
     try {
       const user = await User.findById(payload.id);
-
       if (
         payload.password == user.password &&
         payload.username == user.username
@@ -53,7 +51,6 @@ passport.use(
           return done(null, user);
         }
       }
-
       return done(null, false);
     } catch (err) {
       return done(err, false);
@@ -180,13 +177,9 @@ app.get(
   }
 );
 
-app.get(
-  "/blogs",
-  passport.authenticate("jwt", { session: false }),
-  async (req, res) => {
-    controlPermission(req, res, "get_blogs", getBlogs);
-  }
-);
+app.get("/blogs", async (req, res) => {
+  getBlogs(req, res);
+});
 
 app.post(
   "/blogs",
@@ -228,10 +221,35 @@ app.delete(
   }
 );
 
-app.get(
-  "/images",
+app.get("/images", async (req, res) => {
+  getImages(req, res);
+});
+
+app.get("/menus", async (req, res) => {
+  getMenus(req, res);
+});
+
+app.post(
+  "/menus",
+  passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    getImages(req, res);
+    controlPermission(req, res, "create_menu", createMenu);
+  }
+);
+
+app.put(
+  "/menus/:menuId",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    controlPermission(req, res, "update_menu", updateMenu);
+  }
+);
+
+app.delete(
+  "/menus/:menuId",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    controlPermission(req, res, "delete_menu", deleteMenu);
   }
 );
 

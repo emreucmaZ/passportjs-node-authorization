@@ -21,8 +21,9 @@ import { getUserPermissions } from "@/helpers/getUserPermissions";
 const pages: IPage[] = [
   { title: "Kullanıcılar", permission_name: "superadmin", url: "/users" },
   { title: "Roller", permission_name: "superadmin", url: "/roles" },
-  { title: "Blog Yazıları", permission_name: "get_blogs", url: "/blogs" },
+  { title: "Blog Yazıları", permission_name: "", url: "/blogs" },
   { title: "Resimler", permission_name: "", url: "/images" },
+  { title: "Menüler", permission_name: "", url: "/menus" },
 ];
 const settings: ISetting[] = [
   { title: "Profil", url: "/profile" },

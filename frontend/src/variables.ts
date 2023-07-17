@@ -15,8 +15,9 @@ export const modalBoxStyle = {
 };
 export const permissionList: IPermission[] = [
   { value: "superadmin", label: "Süper Admin" },
-  { value: "add_menu", label: "Menü Ekleme" },
+  { value: "create_menu", label: "Menü Ekleme" },
   { value: "delete_menu", label: "Menü Silme" },
+  { value: "update_menu", label: "Menü Düzenleme" },
   { value: "get_blogs", label: "Blog Çekme" },
   { value: "create_blog", label: "Blog Ekleme" },
   { value: "update_blog", label: "Blog Düzenleme" },
