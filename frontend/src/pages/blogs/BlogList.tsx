@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
-import { Button } from "@mui/material";
+import { Button,Modal,Box } from "@mui/material";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { IModalVisibles } from "./modals/interfaces/IModalVisibles";
@@ -9,7 +9,7 @@ import { BlogDataRow } from "./types";
 import UpdateBlogModal from "./modals/UpdateBlogModal";
 import CreateBlogModal from "./modals/CreateBlogModal";
 import DeleteBlogModal from "./modals/DeleteBlogModal";
-import { REQUEST_URL } from "@/variables";
+import { REQUEST_URL, modalBoxStyle } from "@/variables";
 
 function BlogList({
   blogs,
@@ -25,19 +25,30 @@ function BlogList({
     updatingBlog: null,
     isDeleteModalVisible: false,
     deletingBlogId: null,
+    isFullscreenVisible: false,
+    selectedImage: null,
   });
 
   const columns: TableColumn<BlogDataRow>[] = [
     {
       name: "Blog Kapak Resmi",
-      cell: (row:any) => {
+      cell: (row) => {
         return (
           <>
             <img
+            className="cursor-pointer"
               src={`${REQUEST_URL}/public/images/${row.blogImageName}`}
               width={50}
               height={50}
               alt={row.title}
+              onClick={() => {
+                setRefreshWhenDataChange(Math.random() * 91238);
+                setModalVisibles({
+                  ...modalVisibles,
+                  isFullscreenVisible: true,
+                  selectedImage: row.blogImageName,
+                });
+              }}
             />
           </>
         );
@@ -135,6 +146,15 @@ function BlogList({
     });
   };
 
+  const closeFullscreenModal = () => {
+    setRefreshWhenDataChange(Math.random() * 91238);
+    setModalVisibles({
+      ...modalVisibles,
+      isFullscreenVisible: false,
+      selectedImage: null,
+    });
+  };
+
   return (
     <>
       {modalVisibles.updatingBlog ? (
@@ -163,6 +183,20 @@ function BlogList({
         isVisible={modalVisibles.isCreateModalVisible}
         handleClose={closeCreateBlogModal}
       />
+      <Modal
+        open={modalVisibles.isFullscreenVisible}
+        onClose={closeFullscreenModal}
+      >
+        <Box sx={[modalBoxStyle, { padding: 0, borderRadius: 0 }]}>
+          {modalVisibles.selectedImage && (
+            <img
+              src={`${REQUEST_URL}/public/images/${modalVisibles.selectedImage}`}
+              alt={modalVisibles.selectedImage}
+              style={{ maxWidth: "100%", maxHeight: "100%" }}
+            />
+          )}
+        </Box>
+      </Modal>
       <div>
         <DataTable
           fixedHeader

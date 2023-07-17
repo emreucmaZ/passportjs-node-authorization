@@ -5,6 +5,5 @@ export interface IDeleteImageModalProps{
     isVisible:boolean,
     handleClose:any,
     state:IRootState,
-    imageId:string,
-    router:NextRouter
+    imageId:string |null,
 }

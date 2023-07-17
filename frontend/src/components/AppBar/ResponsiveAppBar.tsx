@@ -14,8 +14,6 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useRouter } from "next/router";
 import { IPage, ISetting } from "./interfaces";
-import { REQUEST_URL } from "@/variables";
-import axios from "axios";
 import { useSelector } from "react-redux";
 import { IRootState } from "@/redux/interfaces/IRootState";
 import { getUserPermissions } from "@/helpers/getUserPermissions";
@@ -24,7 +22,7 @@ const pages: IPage[] = [
   { title: "Kullanıcılar", permission_name: "superadmin", url: "/users" },
   { title: "Roller", permission_name: "superadmin", url: "/roles" },
   { title: "Blog Yazıları", permission_name: "get_blogs", url: "/blogs" },
-  { title: "Resimler", permission_name: "get_images", url: "/images" },
+  { title: "Resimler", permission_name: "", url: "/images" },
 ];
 const settings: ISetting[] = [
   { title: "Profil", url: "/profile" },
@@ -119,6 +117,16 @@ function ResponsiveAppBar() {
               }}
             >
               {pages.map((page) => {
+                if(page.permission_name == ""){
+                  return (
+                    <MenuItem
+                      key={page.title}
+                      onClick={() => handleCloseNavMenu(page)}
+                    >
+                      <Typography textAlign="center">{page.title}</Typography>
+                    </MenuItem>
+                  );
+                }
                 if (permissions?.indexOf(page.permission_name) > -1) {
                   return (
                     <MenuItem
@@ -128,8 +136,6 @@ function ResponsiveAppBar() {
                       <Typography textAlign="center">{page.title}</Typography>
                     </MenuItem>
                   );
-                } else {
-                  return null;
                 }
               })}
             </Menu>
@@ -155,6 +161,19 @@ function ResponsiveAppBar() {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page: IPage) => {
+              if(page.permission_name == ""){
+                return (
+                  <>
+                    <Button
+                      key={page.title}
+                      onClick={() => handleCloseNavMenu(page)}
+                      sx={{ my: 2, color: "white", display: "block" }}
+                    >
+                      {page.title}
+                    </Button>
+                  </>
+                );
+              }
               if (permissions?.indexOf(page.permission_name) > -1) {
                 return (
                   <>

@@ -2,14 +2,9 @@ import {
   Box,
   Button,
   TextField,
-  Input,
-  InputLabel,
   Modal,
-  FormControl,
-  Select,
-  MenuItem,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { IUploadImageForm, IUploadImageModalProps } from "./interfaces";
 import { modalBoxStyle } from "@/variables";
 import { uploadImage } from "./functions";
@@ -33,6 +28,11 @@ function UploadImageModal({
       uploadImage(values, state, handleClose);
     },
   });
+
+  useEffect(() => {
+    formik.setValues(formik.initialValues)
+  }, [isVisible])
+  
 
   return (
     <>

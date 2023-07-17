@@ -1,18 +1,11 @@
 const express = require("express");
 const passport = require("passport");
 const getUserPermissionsFromDatabase = require("./helpers/getUserPermissionsFromDatabase");
-const LocalStrategy = require("passport-local").Strategy;
-const mongoose = require("mongoose");
 const User = require("./models/userModel");
-const authorize = require("./helpers/authorize");
 const getSecretKey = require("./helpers/getSecretKey");
-const { ObjectId } = require("mongodb");
-const Role = require("./models/roleModel");
-const bcrypt = require("bcrypt");
 const { ExtractJwt } = require("passport-jwt");
 const loginController = require("./controllers/user/loginController");
 const session = require("express-session");
-const sendResponse = require("./helpers/sendResponse");
 const createRole = require("./controllers/role/createRoleController");
 const createUser = require("./controllers/user/createUserController");
 const controlPermission = require("./helpers/controlPermission");
@@ -24,20 +17,21 @@ const updateUser = require("./controllers/user/updateUserController");
 const deleteUser = require("./controllers/user/deleteUserController");
 const updateRole = require("./controllers/role/updateRoleController");
 const deleteRole = require("./controllers/role/deleteRoleController");
-const { upload } = require("./multerStorage");
-const bodyParser = require("body-parser");
-const { default: slugify } = require("slugify");
 const { DIR } = require("./variables");
 const getImages = require("./controllers/images/getImagesController");
 const path = require("path");
 const createBlog = require("./controllers/blogs/createBlogController");
-const Image = require("./models/imageModel");
 const getBlogs = require("./controllers/blogs/getBlogsController");
 const updateBlog = require("./controllers/blogs/updateBlogController");
 const deleteBlog = require("./controllers/blogs/deleteBlogController");
 const JwtStrategy = require("passport-jwt").Strategy;
 require("./db"); // db.js dosyasını burada içe aktarın
-const logger = require('./controllers/logger/logger')
+const logger = require("./controllers/logger/logger");
+const uploadImage = require("./controllers/images/uploadImage");
+const fs = require("fs");
+const Image = require("./models/imageModel");
+const sendResponse = require("./helpers/sendResponse");
+const deleteImage = require("./controllers/images/deleteImage");
 
 const myLogger = logger();
 const options = {
@@ -89,7 +83,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use("/public", express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
@@ -190,7 +184,7 @@ app.get(
   "/blogs",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    controlPermission(req,res,"get_blogs",getBlogs)
+    controlPermission(req, res, "get_blogs", getBlogs);
   }
 );
 
@@ -198,7 +192,7 @@ app.post(
   "/blogs",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    controlPermission(req,res,"create_blog",createBlog)
+    controlPermission(req, res, "create_blog", createBlog);
   }
 );
 
@@ -206,7 +200,7 @@ app.put(
   "/blogs/:blogId",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    controlPermission(req,res,"update_blog",updateBlog)
+    controlPermission(req, res, "update_blog", updateBlog);
   }
 );
 
@@ -214,7 +208,7 @@ app.delete(
   "/blogs/:blogId",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    controlPermission(req,res,"delete_blog",deleteBlog)
+    controlPermission(req, res, "delete_blog", deleteBlog);
   }
 );
 
@@ -222,34 +216,24 @@ app.post(
   "/images",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    if (req.user.roles.includes("upload_image")) {
-      upload.single("image")(req, res, (err) => {
-        if (err) {
-          return res.status(400).json({ error: err.message });
-        }
-        const newImage = new Image({
-            title: req.body.title,
-            filename:slugify(req.file.originalname,{lower:true})
-        })
-        newImage.save().then((res)=>{
-          myLogger.logCreateAction(req.user,"images",res)
-        }).catch(err=>console.log(err))
-        res.send('Upload')
-      });
-    } else {
-      res.status(403).json({ durum: false, message: "Yetkilendirme Hatası" });
-    }
+    controlPermission(req, res, "upload_image", uploadImage);
+  }
+);
+
+app.delete(
+  "/images/:imageId",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    controlPermission(req, res, "delete_image", deleteImage);
   }
 );
 
 app.get(
   "/images",
-  passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    controlPermission(req,res,"get_images",getImages)
+    getImages(req, res);
   }
 );
-
 
 app.listen(5002, () => {
   console.log("Sunucu 5002 numaralı portta çalışıyor...");

@@ -11,5 +11,6 @@ export default function uploadImage(uploadImageForm:IUploadImageForm,state:IRoot
             }
         }).then((response)=>{
             handleClose();
-        })
+        }).catch(err=>
+            console.error(err))
 }

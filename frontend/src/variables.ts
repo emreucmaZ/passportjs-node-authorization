@@ -22,5 +22,5 @@ export const permissionList: IPermission[] = [
   { value: "update_blog", label: "Blog Düzenleme" },
   { value: "delete_blog", label: "Blog Silme" },
   { value: "upload_image", label: "Resim Ekleme" },
-  { value: "get_images", label: "Resim Çekme" },
+  { value: "delete_image", label: "Resim Silme" },
 ];
