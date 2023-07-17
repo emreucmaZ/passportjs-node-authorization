@@ -34,10 +34,12 @@ const createBlog = require("./controllers/blogs/createBlogController");
 const Image = require("./models/imageModel");
 const getBlogs = require("./controllers/blogs/getBlogsController");
 const updateBlog = require("./controllers/blogs/updateBlogController");
-const deleteBlog = require("./controllers/blogs/deteBlogController");
+const deleteBlog = require("./controllers/blogs/deleteBlogController");
 const JwtStrategy = require("passport-jwt").Strategy;
 require("./db"); // db.js dosyasını burada içe aktarın
+const logger = require('./controllers/logger/logger')
 
+const myLogger = logger();
 const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: getSecretKey(),
@@ -229,7 +231,9 @@ app.post(
             title: req.body.title,
             filename:slugify(req.file.originalname,{lower:true})
         })
-        newImage.save().catch(err=>console.log(err))
+        newImage.save().then((res)=>{
+          myLogger.logCreateAction(req.user,"images",res)
+        }).catch(err=>console.log(err))
         res.send('Upload')
       });
     } else {

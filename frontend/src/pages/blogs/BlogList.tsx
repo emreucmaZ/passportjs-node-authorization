@@ -30,7 +30,7 @@ function BlogList({
   const columns: TableColumn<BlogDataRow>[] = [
     {
       name: "Blog Kapak Resmi",
-      selector: (row:any) => {
+      cell: (row:any) => {
         return (
           <>
             <img

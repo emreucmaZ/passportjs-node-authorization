@@ -15,7 +15,7 @@ function Users() {
   const [users, setUsers] = useState<IUser[]>([]);
   const [roles, setRoles] = useState<IRole[]>([]);
   const [permissions, setPermissions] = useState<string[]>([]);
-  const [refreshWhenDataChange, setRefreshWhenDataChange] = useState();
+  const [refreshWhenDataChange, setRefreshWhenDataChange] = useState(); 
 
   useEffect(() => {
     function getUsers() {

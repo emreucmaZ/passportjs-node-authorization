@@ -9,7 +9,7 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ICreateUpdateBlogForm, ICreateBlogModalProps } from "./interfaces";
 import { REQUEST_URL, modalBoxStyle } from "@/variables";
 import { createBlog } from "./functions";
@@ -32,6 +32,12 @@ function CreateBlogModal({ isVisible, handleClose, state,images }: ICreateBlogMo
       createBlog(values, state, handleClose)
     },
   });
+
+  useEffect(() => {
+  
+    formik.setValues(formik.initialValues)
+  }, [isVisible])
+  
 
   return (
     <>
