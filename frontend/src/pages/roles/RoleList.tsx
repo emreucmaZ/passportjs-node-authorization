@@ -85,7 +85,7 @@ function RoleList({
                 <DeleteOutlineIcon color="error" fontSize="small" />
               </span>
             ) : (
-              <span className="font-bold py-2 px-4 rounded">
+              <span className="font-bold py-2 px-4 rounded cursor-not-allowed">
                 <DeleteOutlineIcon color="disabled" fontSize="small" />
               </span>
             )
