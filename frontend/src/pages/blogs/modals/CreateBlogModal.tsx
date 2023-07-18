@@ -9,7 +9,7 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { ICreateUpdateBlogForm, ICreateBlogModalProps } from "./interfaces";
 import { REQUEST_URL, modalBoxStyle } from "@/variables";
 import { createBlog } from "./functions";
@@ -18,8 +18,10 @@ import { useFormik } from "formik";
 import * as Yup from "yup"
 import { CreateBlogSchema } from "../schemas/CreateBlogSchema";
 import { IImage } from "@/pages/images/interfaces/IImage";
+import TextAreaComponent from "@/components/TextAreaComponent";
 
 function CreateBlogModal({ isVisible, handleClose, state,images }: ICreateBlogModalProps) {
+  const editor = useRef<any>();
   const formik = useFormik({
     initialValues: {
       _id: "",
@@ -44,7 +46,7 @@ function CreateBlogModal({ isVisible, handleClose, state,images }: ICreateBlogMo
       <Modal open={isVisible} onClose={handleClose}>
         <Box sx={modalBoxStyle}>
           <div className="mb-8">
-            <h1 className="font-bold text-xl">Kullanıcı Ekle</h1>
+            <h1 className="font-bold text-xl">Blog Yazısı Ekle</h1>
           </div>
 
           <div>
@@ -62,21 +64,7 @@ function CreateBlogModal({ isVisible, handleClose, state,images }: ICreateBlogMo
                 }
                 helperText={formik.touched.title && formik.errors.title}
               />
-              <TextField
-                sx={{ marginTop: 2 }}
-                fullWidth
-                id="content"
-                name="content"
-                label="content"
-                type="content"
-                value={formik.values.content}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={
-                  formik.touched.content && Boolean(formik.errors.content)
-                }
-                helperText={formik.touched.content && formik.errors.content}
-              />
+              <TextAreaComponent editor={editor} formik={formik} state={state}/>
               <FormControl fullWidth sx={{ marginTop: 2 }}>
                 <InputLabel id="demo-simple-select-label">Blog Resmi</InputLabel>
                 <Select

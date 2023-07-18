@@ -39,7 +39,7 @@ function CreateRoleModal({
       <Modal open={isVisible} onClose={handleClose}>
         <Box sx={modalBoxStyle}>
           <div className="mb-8">
-            <h1 className="font-bold text-xl">Kullanıcı Ekle</h1>
+            <h1 className="font-bold text-xl">Rol Ekle</h1>
           </div>
 
           <div>

@@ -42,23 +42,7 @@ function MenuList({
       selector: (row) => row.parentId,
     },
     {
-      name:
-        permissions?.indexOf("create_menu") > -1 ? (
-          <Button
-            variant="contained"
-            onClick={async () => {
-              setRefreshWhenDataChange(Math.random() * 91238);
-              setModalVisibles({
-                ...modalVisibles,
-                isCreateModalVisible: true,
-              });
-            }}
-          >
-            Menü Ekle
-          </Button>
-        ) : (
-          "Actions"
-        ),
+      name:"Actions",
       cell: (row) => (
         <>
           {permissions?.indexOf("update_menu") > -1 ? (
@@ -170,6 +154,23 @@ function MenuList({
         handleClose={closeCreateMenuModal}
       />
       <div>
+      {
+          permissions?.indexOf("create_menu") > -1 ? (
+            <Button
+              sx={{display:"flex",marginLeft:"auto"}}
+              variant="contained"
+              onClick={() => {
+                setRefreshWhenDataChange(Math.random() * 91238);
+                setModalVisibles({
+                  ...modalVisibles,
+                  isCreateModalVisible: true,
+                });
+              }}
+            >
+              Menü Ekle
+            </Button>
+          ) : null
+         }
         <DataTable
           fixedHeader
           fixedHeaderScrollHeight="700px"

@@ -63,23 +63,7 @@ function BlogList({
       selector: (row) => row.title,
     },
     {
-      name:
-        permissions?.indexOf("create_blog") > -1 ? (
-          <Button
-            variant="contained"
-            onClick={async () => {
-              setRefreshWhenDataChange(Math.random() * 91238);
-              setModalVisibles({
-                ...modalVisibles,
-                isCreateModalVisible: true,
-              });
-            }}
-          >
-            Blog Ekle
-          </Button>
-        ) : (
-          "Actions"
-        ),
+      name:"Actions",
       cell: (row) => (
         <>
           {permissions?.indexOf("update_blog") > -1 ? (
@@ -198,6 +182,23 @@ function BlogList({
         </Box>
       </Modal>
       <div>
+      {
+          permissions?.indexOf("create_blog") > -1 ? (
+            <Button
+              sx={{display:"flex",marginLeft:"auto"}}
+              variant="contained"
+              onClick={() => {
+                setRefreshWhenDataChange(Math.random() * 91238);
+                setModalVisibles({
+                  ...modalVisibles,
+                  isCreateModalVisible: true,
+                });
+              }}
+            >
+              Blog Yazısı Ekle
+            </Button>
+          ) : null
+         }
         <DataTable
           fixedHeader
           fixedHeaderScrollHeight="700px"

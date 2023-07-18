@@ -7,15 +7,16 @@ import {
   FormControl,
   Select,
   MenuItem,
-  InputLabel
+  InputLabel,
 } from "@mui/material";
-import React from "react";
+import React, { useRef } from "react";
 import { useFormik } from "formik";
 import { IUpdateBlogModalProps } from "./interfaces/IUpdateBlogModalProps";
 import { ICreateUpdateBlogForm } from "./interfaces";
 import { UpdateBlogSchema } from "../schemas/UpdateBlogSchema";
 import updateBlog from "./functions/updateBlog";
 import { IImage } from "@/pages/images/interfaces/IImage";
+import TextAreaComponent from "@/components/TextAreaComponent";
 
 function UpdateBlogModal({
   handleClose,
@@ -24,19 +25,21 @@ function UpdateBlogModal({
   state,
   images,
 }: IUpdateBlogModalProps) {
+  const editor = useRef<any>();
+
   const initialValues: ICreateUpdateBlogForm = {
     _id: blog._id,
     title: blog.title,
-    content:blog.content,
-    blogImageName:blog.blogImageName
-  };  
+    content: blog.content,
+    blogImageName: blog.blogImageName,
+  };
 
   const formik = useFormik({
     initialValues: {
       _id: blog._id,
       title: blog.title,
       content: blog.content,
-      blogImageName: blog.blogImageName
+      blogImageName: blog.blogImageName,
     },
     validationSchema: UpdateBlogSchema,
     onSubmit: (values: ICreateUpdateBlogForm) => {
@@ -45,7 +48,6 @@ function UpdateBlogModal({
   });
 
   console.log(formik.values);
-  
 
   return (
     <>
@@ -61,27 +63,19 @@ function UpdateBlogModal({
                 value={formik.values.title}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                error={
-                  formik.touched.title && Boolean(formik.errors.title)
-                }
+                error={formik.touched.title && Boolean(formik.errors.title)}
                 helperText={formik.touched.title && formik.errors.title}
               />
-              <TextField
-                sx={{ marginTop: 2 }}
-                fullWidth
-                id="content"
-                name="content"
-                label="content"
-                value={formik.values.content}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={
-                  formik.touched.content && Boolean(formik.errors.content)
-                }
-                helperText={formik.touched.content && formik.errors.content}
+              <TextAreaComponent
+                editor={editor}
+                formik={formik}
+                state={state}
               />
+
               <FormControl fullWidth sx={{ marginTop: 2 }}>
-                <InputLabel id="demo-simple-select-label">Blog Resmi</InputLabel>
+                <InputLabel id="demo-simple-select-label">
+                  Blog Resmi
+                </InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
@@ -90,15 +84,23 @@ function UpdateBlogModal({
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   error={
-                    formik.touched.blogImageName && Boolean(formik.errors.blogImageName)
+                    formik.touched.blogImageName &&
+                    Boolean(formik.errors.blogImageName)
                   }
                 >
                   {images?.map((image: IImage) => {
                     return (
-                      <MenuItem onClick={() => {
-                        formik.setFieldValue("blogImageName", image.filename)
-                      }} value={image.filename}>
-                        <img src={`${REQUEST_URL}/public/images/${image.filename}`} width={30} height={30} />
+                      <MenuItem
+                        onClick={() => {
+                          formik.setFieldValue("blogImageName", image.filename);
+                        }}
+                        value={image.filename}
+                      >
+                        <img
+                          src={`${REQUEST_URL}/public/images/${image.filename}`}
+                          width={30}
+                          height={30}
+                        />
                         {image.title}
                       </MenuItem>
                     );

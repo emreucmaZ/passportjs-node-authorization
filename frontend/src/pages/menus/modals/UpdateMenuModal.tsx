@@ -1,4 +1,4 @@
-import { REQUEST_URL, modalBoxStyle } from "@/variables";
+import { modalBoxStyle } from "@/variables";
 import {
   Box,
   Modal,
@@ -9,16 +9,18 @@ import {
   MenuItem,
   InputLabel,
 } from "@mui/material";
-import React from "react";
+import React, { useRef, useEffect, useMemo } from "react";
 import { useFormik } from "formik";
 import { IUpdateMenuModalProps } from "./interfaces/IUpdateMenuModalProps";
-import updateBlog from "./functions/updateMenu";
-import { IImage } from "@/pages/images/interfaces/IImage";
 import { UpdateMenuSchema } from "../schemas/UpdateMenuSchema";
 import { ICreateUpdateMenuForm } from "./interfaces";
 import updateMenu from "./functions/updateMenu";
 import { IMenu } from "@/redux/interfaces/menu";
 import slugify from "slugify";
+import { imageUpload } from "./functions/imageUpload";
+import dynamic from "next/dynamic";
+
+const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
 function UpdateBlogModal({
   handleClose,
@@ -27,13 +29,7 @@ function UpdateBlogModal({
   state,
   menus,
 }: IUpdateMenuModalProps) {
-  const initialValues: ICreateUpdateMenuForm = {
-    _id: menu._id,
-    title: menu.title,
-    content: menu.content,
-    route: menu.route,
-    parentId: menu.parentId,
-  };
+  const editor = useRef<any>(null);
 
   const formik = useFormik({
     initialValues: {
@@ -48,6 +44,58 @@ function UpdateBlogModal({
       updateMenu(values, state, handleClose);
     },
   });
+
+  const config:Object = useMemo(
+    () => ({
+      readonly: false,
+      disablePlugins: ["paste"],
+      tabIndex: 1,
+      defaultActionOnPaste: "insert_clear_html",
+      toolbarButtonSize: "large",
+      buttons: [
+        "source",
+        "|",
+        "bold",
+        "italic",
+        "|",
+        "ul",
+        "ol",
+        "|",
+        "font",
+        "fontsize",
+        "brush",
+        "paragraph",
+        "|",
+        "video",
+        "table",
+        "link",
+        "|",
+        "left",
+        "center",
+        "right",
+        "justify",
+        "|",
+        "undo",
+        "redo",
+        "|",
+        "hr",
+        "eraser",
+        "fullsize",
+      ],
+      extraButtons: [
+        {
+          name: "insertDate",
+          tooltip: "Insert current Date",
+          iconURL:
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Picture_icon_BLACK.svg/1200px-Picture_icon_BLACK.svg.png",
+          exec: (editor: any) => {
+            imageUpload(editor, state);
+          },
+        },
+      ],
+    }),
+    []
+  );
 
   return (
     <>
@@ -72,17 +120,13 @@ function UpdateBlogModal({
                 error={formik.touched.title && Boolean(formik.errors.title)}
                 helperText={formik.touched.title && formik.errors.title}
               />
-              <TextField
-                sx={{ marginTop: 2 }}
-                fullWidth
-                id="content"
-                name="content"
-                label="content"
+              <JoditEditor
+                ref={editor}
+                onChange={(value) => {
+                  formik.setFieldValue("content", value);
+                }}
+                config={config}
                 value={formik.values.content}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.content && Boolean(formik.errors.content)}
-                helperText={formik.touched.content && formik.errors.content}
               />
               <TextField
                 sx={{ marginTop: 2 }}

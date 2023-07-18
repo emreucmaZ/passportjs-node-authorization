@@ -14,7 +14,7 @@ function DeleteMenuModal({ isVisible, handleClose, state, menuId}: IDeleteMenuMo
             <Modal open={isVisible} onClose={handleClose}>
                 <Box sx={modalBoxStyle}>
                     <div className="mb-8">
-                        <h1 className="font-bold text-xl">Kullanıcı Sil</h1>
+                        <h1 className="font-bold text-xl">Menü Sil</h1>
                     </div>
 
                     <div>

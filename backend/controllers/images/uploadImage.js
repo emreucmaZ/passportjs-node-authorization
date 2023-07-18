@@ -2,6 +2,7 @@ const { default: slugify } = require("slugify");
 const Image = require("../../models/imageModel");
 const { upload } = require("../../multerStorage");
 const logger = require("../logger/logger");
+const sendResponse = require("../../helpers/sendResponse");
 
 const myLogger = logger();
 function uploadImage(req, res) {
@@ -15,11 +16,11 @@ function uploadImage(req, res) {
     });
     newImage
       .save()
-      .then((res) => {
-        myLogger.logCreateAction(req.user, "images", res);
+      .then((response) => {
+        myLogger.logCreateAction(req.user, "images", response);
+        sendResponse(true,"image",{url:response.filename},res,200)
       })
-      .catch((err) => console.log(err));
-    res.send("Upload");
+      .catch((err) => sendResponse(false,"image",{url:err.keyValue.filename},res,200));
   });
 }
 

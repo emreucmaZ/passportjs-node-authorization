@@ -40,23 +40,7 @@ function UserList({ users, permissions, roles, state, router,setRefreshWhenDataC
       }
     },
     {
-      name:
-        permissions?.indexOf("superadmin") > -1 ? (
-          <Button
-            variant="contained"
-            onClick={async () => {
-              setRefreshWhenDataChange(Math.random() * 91238);
-              setModalVisibles({
-                ...modalVisibles,
-                isCreateModalVisible: true,
-              });
-            }}
-          >
-            Kullanıcı Ekle
-          </Button>
-        ) : (
-          "Actions"
-        ),
+      name:'Actions',
       cell: (row) => (
         <>
           {permissions?.indexOf("superadmin") > -1 ? (
@@ -158,6 +142,23 @@ function UserList({ users, permissions, roles, state, router,setRefreshWhenDataC
         handleClose={closeCreateUserModal}
       />
       <div>
+      {
+          permissions?.indexOf("superadmin") > -1 ? (
+            <Button
+              sx={{display:"flex",marginLeft:"auto"}}
+              variant="contained"
+              onClick={() => {
+                setRefreshWhenDataChange(Math.random() * 91238);
+                setModalVisibles({
+                  ...modalVisibles,
+                  isCreateModalVisible: true,
+                });
+              }}
+            >
+              Kullanıcı Ekle
+            </Button>
+          ) : null
+         }
         <DataTable
           fixedHeader
           fixedHeaderScrollHeight="700px"

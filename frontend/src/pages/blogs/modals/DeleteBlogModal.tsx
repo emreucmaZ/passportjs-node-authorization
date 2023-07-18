@@ -14,7 +14,7 @@ function DeleteBlogModal({ isVisible, handleClose, state, blogId,router}: IDelet
             <Modal open={isVisible} onClose={handleClose}>
                 <Box sx={modalBoxStyle}>
                     <div className="mb-8">
-                        <h1 className="font-bold text-xl">Kullanıcı Sil</h1>
+                        <h1 className="font-bold text-xl">Blog Yazısı Sil</h1>
                     </div>
 
                     <div>

@@ -35,23 +35,7 @@ function RoleList({
       selector: (row) => row.name,
     },
     {
-      name:
-        permissions?.indexOf("superadmin") > -1 ? (
-          <Button
-            variant="contained"
-            onClick={() => {
-              setRefreshWhenDataChange(Math.random() * 91238);
-              setModalVisibles({
-                ...modalVisibles,
-                isCreateModalVisible: true,
-              });
-            }}
-          >
-            Rol Ekle
-          </Button>
-        ) : (
-          "Actions"
-        ),
+      name:'Actions',
       cell: (row) => (
         <>
           {permissions?.indexOf("superadmin") > -1 ? (
@@ -151,6 +135,23 @@ function RoleList({
         handleClose={closeCreateRoleModal}
       />
       <div>
+      {
+          permissions?.indexOf("superadmin") > -1 ? (
+            <Button
+              sx={{display:"flex",marginLeft:"auto"}}
+              variant="contained"
+              onClick={() => {
+                setRefreshWhenDataChange(Math.random() * 91238);
+                setModalVisibles({
+                  ...modalVisibles,
+                  isCreateModalVisible: true,
+                });
+              }}
+            >
+              Rol Ekle
+            </Button>
+          ) : null
+         }
         <DataTable
           fixedHeader
           fixedHeaderScrollHeight="700px"
