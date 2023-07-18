@@ -25,13 +25,14 @@ const updateBlog = require("./controllers/blogs/updateBlogController");
 const deleteBlog = require("./controllers/blogs/deleteBlogController");
 const JwtStrategy = require("passport-jwt").Strategy;
 require("./db"); // db.js dosyasını burada içe aktarın
-const logger = require("./controllers/logger/logger");
+const logger = require("./helpers/logger/logger");
 const uploadImage = require("./controllers/images/uploadImage");
 const deleteImage = require("./controllers/images/deleteImage");
 const getMenus = require("./controllers/menus/getMenusController");
 const createMenu = require("./controllers/menus/createMenuController");
 const updateMenu = require("./controllers/menus/updateMenuController");
 const deleteMenu = require("./controllers/menus/deleteMenuController");
+const getLogs = require("./controllers/logs/getLogs");
 
 const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -250,6 +251,14 @@ app.delete(
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     controlPermission(req, res, "delete_menu", deleteMenu);
+  }
+);
+
+app.get(
+  "/logs",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    controlPermission(req, res, "superadmin", getLogs);
   }
 );
 

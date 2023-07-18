@@ -1,7 +1,7 @@
 const { default: slugify } = require("slugify");
 const Image = require("../../models/imageModel");
 const { upload } = require("../../multerStorage");
-const logger = require("../logger/logger");
+const logger = require("../../helpers/logger/logger");
 const sendResponse = require("../../helpers/sendResponse");
 
 const myLogger = logger();

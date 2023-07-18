@@ -1,7 +1,7 @@
 const Image = require("../../models/imageModel");
 const { DIR } = require("../../variables");
 const fs = require("fs");
-const logger = require("../logger/logger");
+const logger = require("../../helpers/logger/logger");
 const sendResponse = require("../../helpers/sendResponse");
 
 const myLogger = logger();

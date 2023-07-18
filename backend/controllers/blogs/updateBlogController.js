@@ -1,5 +1,5 @@
 const sendResponse = require("../../helpers/sendResponse");
-const logger = require("../logger/logger");
+const logger = require("../../helpers/logger/logger");
 const Blog = require("../../models/blogModel");
 
 const myLogger = logger();

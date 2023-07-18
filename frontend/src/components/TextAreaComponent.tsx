@@ -9,6 +9,7 @@ function TextAreaComponent({ formik, editor, state }: ITextAreaComponentProps) {
     return (
       <>
         <JoditEditor
+          className="mt-4"
           ref={editor}
           value={formik.values.content}
           onChange={(value: string) => formik.setFieldValue("content", value)}
@@ -50,8 +51,8 @@ function TextAreaComponent({ formik, editor, state }: ITextAreaComponentProps) {
             ],
             extraButtons: [
               {
-                name: "insertDate",
-                tooltip: "Insert current Date",
+                name: "Insert Image",
+                tooltip: "Insert An Image",
                 iconURL:
                   "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Picture_icon_BLACK.svg/1200px-Picture_icon_BLACK.svg.png",
                 exec: (editor: any) => {

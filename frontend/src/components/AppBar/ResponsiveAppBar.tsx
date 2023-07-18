@@ -24,6 +24,7 @@ const pages: IPage[] = [
   { title: "Blog Yazıları", permission_name: "", url: "/blogs" },
   { title: "Resimler", permission_name: "", url: "/images" },
   { title: "Menüler", permission_name: "", url: "/menus" },
+  { title: "Loglar", permission_name: "superadmin", url: "/logs" },
 ];
 const settings: ISetting[] = [
   { title: "Profil", url: "/profile" },

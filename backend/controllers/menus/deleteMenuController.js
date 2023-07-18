@@ -1,6 +1,6 @@
 const sendResponse = require("../../helpers/sendResponse");
 const Menu = require("../../models/menuModel");
-const logger = require("../logger/logger");
+const logger = require("../../helpers/logger/logger");
 
 const myLogger = logger();
 async function deleteMenu(req, res) {

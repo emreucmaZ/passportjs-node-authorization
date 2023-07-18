@@ -1,6 +1,6 @@
 const sendResponse = require("../../helpers/sendResponse");
 const Blog = require("../../models/blogModel");
-const logger = require('../logger/logger');
+const logger = require('../../helpers/logger/logger');
 
 const myLogger = logger();
 async function deleteBlog(req, res) {
