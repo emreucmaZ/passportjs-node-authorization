@@ -27,6 +27,9 @@ export const permissionList: IPermission[] = [
   { value: "delete_blog", label: "Blog Silme" },
   { value: "upload_image", label: "Resim Ekleme" },
   { value: "delete_image", label: "Resim Silme" },
+  { value: "create_social_connection", label: "Sosyal Bağlantı Ekleme" },
+  { value: "update_social_connection", label: "Sosyal Bağlantı Güncelleme" },
+  { value: "delete_social_connection", label: "Sosyal Bağlantı Silme" },
 ];
 
 export const logTypes: string[] = ["create", "update", "delete"];

@@ -33,6 +33,10 @@ const createMenu = require("./controllers/menus/createMenuController");
 const updateMenu = require("./controllers/menus/updateMenuController");
 const deleteMenu = require("./controllers/menus/deleteMenuController");
 const getLogs = require("./controllers/logs/getLogs");
+const getSocialConnections = require("./controllers/socialConnections/getSocialConnectionsController");
+const createSocialConnection = require("./controllers/socialConnections/createSocialConnectionController");
+const updateSocialConnection = require("./controllers/socialConnections/updateSocialConnectionController");
+const deleteSocialConnection = require("./controllers/socialConnections/deleteSocialConnectionController");
 
 const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -259,6 +263,37 @@ app.get(
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     controlPermission(req, res, "superadmin", getLogs);
+  }
+);
+
+app.get(
+  "/socialConnections",
+  async (req, res) => {
+    getSocialConnections(req,res)
+  }
+);
+
+app.post(
+  "/socialConnections",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    controlPermission(req, res, "create_social_connection", createSocialConnection);
+  }
+);
+
+app.put(
+  "/socialConnections/:socialConnectionId",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    controlPermission(req, res, "update_social_connection", updateSocialConnection);
+  }
+);
+
+app.delete(
+  "/socialConnections/:socialConnectionId",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    controlPermission(req, res, "delete_social_connection", deleteSocialConnection);
   }
 );
 

@@ -25,6 +25,7 @@ const pages: IPage[] = [
   { title: "Resimler", permission_name: "", url: "/images" },
   { title: "Menüler", permission_name: "", url: "/menus" },
   { title: "Loglar", permission_name: "superadmin", url: "/logs" },
+  { title: "Sosyal Bağlantılar", permission_name: "", url: "/socialConnections" },
 ];
 const settings: ISetting[] = [
   { title: "Profil", url: "/profile" },
