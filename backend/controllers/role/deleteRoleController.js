@@ -7,7 +7,7 @@ async function deleteRole(req, res) {
   if (req.user.roleId != req.params.roleId) {
     Role.findByIdAndDelete(req.params.roleId)
       .then((response) => {
-        myLogger.logDeleteAction(req.user,"roles",response)
+        myLogger.logDeletedEntity(req.user,"roles",response)
         sendResponse(true, "message", "Rol Silindi", res, 204);
       })
       .catch((err) => {

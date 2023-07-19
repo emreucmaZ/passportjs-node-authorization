@@ -23,7 +23,7 @@ function createUser(req, res) {
       newUser
         .save()
         .then((savedUser) => {
-          myLogger.logCreateAction(req.user, "users", savedUser);
+          myLogger.logCreatedEntity(req.user, "users", savedUser);
           return sendResponse(
             true,
             "message",

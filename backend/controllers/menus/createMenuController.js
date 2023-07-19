@@ -14,7 +14,7 @@ function createMenu(req, res) {
       newMenu
         .save()
         .then((savedMenu) => {
-          myLogger.logCreateAction(req.user, "menus", savedMenu);
+          myLogger.logCreatedEntity(req.user, "menus", savedMenu);
           return sendResponse(
             true,
             "message",

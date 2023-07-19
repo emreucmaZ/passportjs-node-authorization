@@ -1,41 +1,42 @@
-const CreateLog = require("../../models/createLogModel");
-const DeleteLog = require("../../models/deleteLogModel");
-const UpdateLog = require("../../models/updateLogModel");
+const EntityLog = require("../../models/entityLogModel");
 
 function logger() {
-  function logCreateAction(user, table, data) {
-    const newCreateLog = new CreateLog({
+  function logCreatedEntity(user, table, data) {
+    const entityLog = new EntityLog({
       user: user,
       table: table,
       data: data,
+      type:'create',
       timestamp: new Date(),
     });
-    newCreateLog.save();
+    entityLog.save();
   }
-  function logUpdateAction(user, table, data,oldData) {
-    const newUpdateLog = new UpdateLog({
+  function logUpdatedEntity(user, table, data,oldData) {
+    const entityLog = new EntityLog({
       user: user,
       table: table,
-      requestBody: data,
+      type:'update',
+      data: data,
       oldData:oldData,
       timestamp: new Date(),
     });
-    newUpdateLog.save();
+    entityLog.save();
   }
-  function logDeleteAction(user, table, deletedObject) {
-    const newDeleteLog = new DeleteLog({
+  function logDeletedEntity(user, table, deletedObject) {
+    const entityLog = new EntityLog({
       user: user,
       table: table,
-      deletedObject:deletedObject,
+      deletedData:deletedObject,
+      type:'delete',
       timestamp: new Date(),
     });
-    newDeleteLog.save();
+    entityLog.save();
   }
 
   return {
-    logCreateAction,
-    logUpdateAction,
-    logDeleteAction,
+    logCreatedEntity,
+    logUpdatedEntity,
+    logDeletedEntity,
   };
 }
 

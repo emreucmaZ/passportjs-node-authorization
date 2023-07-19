@@ -4,43 +4,34 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import UserList from "./LogList";
-import { getUserPermissions } from "@/helpers";
-import { IRole } from "@/redux/interfaces/role/IRole";
-import { useRouter } from "next/router";
-import { IBlog } from "@/redux/interfaces/blog";
-import { IImage } from "../images/interfaces/IImage";
-import { IMenu } from "@/redux/interfaces/menu";
 import { ILog } from "@/redux/interfaces/log";
 
 function Users() {
   const state = useSelector((state: IRootState) => state);
-  const [createLogs, setCreateLogs] = useState<ILog[]>([]);
+  const [entityLogs, setEntityLogs] = useState<ILog[]>([]);
 
   useEffect(() => {
-    function getCreateLogs() {
+    function getEntityLogs() {
       axios
-        .get(REQUEST_URL + "/logs", {
+        .get(REQUEST_URL + "/entityLogs", {
           headers: {
             Authorization: `Bearer ${state.user.token}`,
           },
         })
         .then((response) => {
-          console.log(response);
-
-          setCreateLogs(response.data.logs.createLogs);
+          setEntityLogs(response.data.logs);
         })
         .catch((err) => null);
     }
 
     return () => {
-      getCreateLogs();
+      getEntityLogs();
     };
   }, []);
-  console.log(createLogs);
 
   return (
     <>
-      <UserList createLogs={createLogs} />
+      <UserList entityLogs={entityLogs} />
     </>
   );
 }

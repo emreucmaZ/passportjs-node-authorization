@@ -17,7 +17,7 @@ function uploadImage(req, res) {
     newImage
       .save()
       .then((response) => {
-        myLogger.logCreateAction(req.user, "images", response);
+        myLogger.logCreatedEntity(req.user, "images", response);
         sendResponse(true,"image",{url:response.filename},res,200)
       })
       .catch((err) => sendResponse(false,"image",{url:err.keyValue.filename},res,200));

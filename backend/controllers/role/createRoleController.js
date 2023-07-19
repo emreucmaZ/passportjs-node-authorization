@@ -11,7 +11,7 @@ function createRole(req,res){
         newRole
           .save()
           .then((savedRole) => {
-            myLogger.logCreateAction(req.user,"roles",savedRole)
+            myLogger.logCreatedEntity(req.user,"roles",savedRole)
             sendResponse(true,"message","Yeni Rol kaydedildi:" + savedRole,res)
           })
           .catch((error) => {

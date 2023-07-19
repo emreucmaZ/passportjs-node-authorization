@@ -14,7 +14,7 @@ function updateMenu(req, res) {
         route: req.body.route,
         parentId:req.body.parentId,
       }).then((response) => {
-        myLogger.logUpdateAction(req.user,"menus",updatedMenu,response)
+        myLogger.logUpdatedEntity(req.user,"menus",updatedMenu,response)
         sendResponse(true, "oldMenu", response, res, 200);
       }).catch((err)=>{
         sendResponse(false, "message", "Böyle Bir Menu var", res, 200);

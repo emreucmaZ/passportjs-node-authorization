@@ -13,7 +13,7 @@ function updateBlog(req, res) {
       content: req.body.content,
       blogImageName: req.body.blogImageName,
     }).then((response) => {
-      myLogger.logUpdateAction(req.user, "blogs", updatedBlog, response);
+      myLogger.logUpdatedEntity(req.user, "blogs", updatedBlog, response);
       sendResponse(true, "oldBlog", response, res, 200);
     }).catch(err=>sendResponse(false, "message", err, res, 200));
   });

@@ -16,7 +16,7 @@ function updateUser(req, res) {
         password:user.password
       }).then((response) => {
         updatedUser.password = user.password
-        myLogger.logUpdateAction(req.user, "users", updatedUser, response);
+        myLogger.logUpdatedEntity(req.user, "users", updatedUser, response);
         sendResponse(true, "oldUser", response, res, 200);
       });
     } else {
@@ -32,7 +32,7 @@ function updateUser(req, res) {
             roleId: req.body.roleId,
           }).then((response) => {
             updatedUser.password = hash;
-            myLogger.logUpdateAction(req.user, "users", updatedUser, response);
+            myLogger.logUpdatedEntity(req.user, "users", updatedUser, response);
             sendResponse(true, "oldUser", response, res, 200);
           });
         });

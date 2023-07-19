@@ -7,7 +7,7 @@ async function deleteUser(req, res) {
   if (req.user._id != req.params.userId) {
     User.findByIdAndDelete(req.params.userId)
       .then((response) => {
-        myLogger.logDeleteAction(req.user,"users",response)
+        myLogger.logDeletedEntity(req.user,"users",response)
         sendResponse(true, "message", "Kullanıcı Silindi", res, 204);
       })
       .catch((err) => {

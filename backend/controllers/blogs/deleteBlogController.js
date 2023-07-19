@@ -6,7 +6,7 @@ const myLogger = logger();
 async function deleteBlog(req, res) {
     Blog.findByIdAndDelete(req.params.blogId)
       .then((response) => {
-        myLogger.logDeleteAction(req.user,"blogs",response)
+        myLogger.logDeletedEntity(req.user,"blogs",response)
         sendResponse(true, "message", "Blog yazısı Silindi", res, 204);
       })
       .catch((err) => {

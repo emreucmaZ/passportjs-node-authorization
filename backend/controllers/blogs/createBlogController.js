@@ -12,7 +12,7 @@ function createBlog(req, res) {
       newBlog
         .save()
         .then((savedBlog) => {
-          myLogger.logCreateAction(req.user, "blogs", savedBlog);
+          myLogger.logCreatedEntity(req.user, "blogs", savedBlog);
           return sendResponse(
             true,
             "message",

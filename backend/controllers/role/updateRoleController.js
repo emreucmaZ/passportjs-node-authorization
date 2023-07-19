@@ -13,7 +13,7 @@ function updateRole(req, res) {
         name: req.body.name,
         permissions:req.body.permissions
       }).then((response) => {
-        myLogger.logUpdateAction(req.user,"roles",updatedRole,response)
+        myLogger.logUpdatedEntity(req.user,"roles",updatedRole,response)
         sendResponse(true, "oldRole", response, res, 200);
       }).catch((err)=>{
         sendResponse(false, "message", "Böyle Bir rol var", res, 200);

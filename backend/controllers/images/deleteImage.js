@@ -12,7 +12,7 @@ function deleteImage(req, res) {
       if (fs.existsSync(imagePath)) {
         fs.unlinkSync(imagePath);
         Image.findByIdAndRemove(req.params.imageId).then((response) => {
-          myLogger.logDeleteAction(req.user, "images", response);
+          myLogger.logDeletedEntity(req.user, "images", response);
           sendResponse(true, "deletedImage", response, res, 204);
         });
       } else {

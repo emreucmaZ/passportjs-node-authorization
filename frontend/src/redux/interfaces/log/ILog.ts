@@ -4,6 +4,9 @@ export interface ILog{
     _id:string,
     user:IUser,
     table:string,
-    data:Object,
-    timestamp:Date
+    data:Object |null,
+    timestamp:Date,
+    type:string,
+    oldData:Object|null,
+    deletedData:Object|null
 }

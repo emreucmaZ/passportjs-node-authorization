@@ -255,7 +255,7 @@ app.delete(
 );
 
 app.get(
-  "/logs",
+  "/entityLogs",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     controlPermission(req, res, "superadmin", getLogs);

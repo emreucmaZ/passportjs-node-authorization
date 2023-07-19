@@ -8,7 +8,7 @@ async function deleteMenu(req, res) {
     if(!response.some(menu=>menu.parentId == req.params.menuId)){
       Menu.findByIdAndDelete(req.params.menuId)
       .then((response) => {
-        myLogger.logDeleteAction(req.user, "menus", response);
+        myLogger.logDeletedEntity(req.user, "menus", response);
         sendResponse(true, "message", "Menü Silindi", res, 204);
       })
       .catch((err) => {
