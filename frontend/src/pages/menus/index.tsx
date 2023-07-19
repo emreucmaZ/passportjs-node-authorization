@@ -3,13 +3,10 @@ import { REQUEST_URL } from "@/variables";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import UserList from "./MenuList";
 import { getUserPermissions } from "@/helpers";
-import { IRole } from "@/redux/interfaces/role/IRole";
 import { useRouter } from "next/router";
-import { IBlog } from "@/redux/interfaces/blog";
-import { IImage } from "../images/interfaces/IImage";
 import { IMenu } from "@/redux/interfaces/menu";
+import MenuList from "./MenuList";
 
 function Users() {
   const state = useSelector((state: IRootState) => state);
@@ -41,7 +38,7 @@ function Users() {
   return (
     <>
       <div>Blogs</div>
-      <UserList
+      <MenuList
         setRefreshWhenDataChange={setRefreshWhenDataChange}
         state={state}
         menus={menus}

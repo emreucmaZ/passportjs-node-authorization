@@ -17,7 +17,7 @@ export const imageUpload = (editor: any,state:IRootState) => {
           return;
         }
 
-        if (!imageFile.name.match(/\.(jpg|jpeg|png)$/)) {
+        if (!imageFile.name.match(/\.(jpg|jpeg|png|webp)$/)) {
           return;
         }
 

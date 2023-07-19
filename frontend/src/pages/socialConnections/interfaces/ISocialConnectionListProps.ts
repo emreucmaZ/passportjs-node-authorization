@@ -7,6 +7,7 @@ export interface ISocialConnectionListProps {
     socialConnections:Array<ISocialConnection>,
     permissions:Array<string>,
     state:IRootState,
+    images: Array<IImage>
     router:NextRouter,
     setRefreshWhenDataChange:Function
 }

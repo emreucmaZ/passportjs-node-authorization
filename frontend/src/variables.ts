@@ -33,4 +33,4 @@ export const permissionList: IPermission[] = [
 ];
 
 export const logTypes: string[] = ["create", "update", "delete"];
-export const tables: string[] = ["users", "roles", "menus","images","blogs"];
+export const tables: string[] = ["users", "roles", "menus","images","blogs","socialConnections"];

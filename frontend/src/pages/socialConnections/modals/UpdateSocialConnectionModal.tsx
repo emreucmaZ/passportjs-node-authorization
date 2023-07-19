@@ -21,6 +21,7 @@ import updateSocialConnection from "./functions/updateSocialConnection";
 function UpdateSocialConnectionModal({
   handleClose,
   isVisible,
+  images,
   socialConnection,
   state,
 }: IUpdateSocialConnectionModalProps) {

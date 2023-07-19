@@ -5,5 +5,6 @@ import { NextRouter } from "next/router";
 export interface ICreateSocialConnectionModalProps{
     isVisible:boolean,
     handleClose:any,
-    state:IRootState
+    state:IRootState,
+    images:IImage[]
 }

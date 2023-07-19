@@ -3,8 +3,8 @@ import { REQUEST_URL } from "@/variables";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import UserList from "./LogList";
 import { ILog } from "@/redux/interfaces/log";
+import LogList from "./LogList";
 
 function Users() {
   const state = useSelector((state: IRootState) => state);
@@ -31,7 +31,7 @@ function Users() {
 
   return (
     <>
-      <UserList entityLogs={entityLogs} />
+      <LogList entityLogs={entityLogs} />
     </>
   );
 }

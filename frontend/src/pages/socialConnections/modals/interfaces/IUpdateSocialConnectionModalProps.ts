@@ -8,6 +8,7 @@ export interface IUpdateSocialConnectionModalProps{
     isVisible:boolean,
     handleClose:any,
     state:IRootState,
+    images:IImage[],
     socialConnection:ISocialConnection | SocialConnectionDataRow,
     router:NextRouter,
 }

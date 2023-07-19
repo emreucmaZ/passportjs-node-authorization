@@ -10,12 +10,13 @@ import { ISocialConnectionListProps } from "./interfaces";
 import UpdateSocialConnectionModal from "./modals/UpdateSocialConnectionModal";
 import DeleteSocialConnectionModal from "./modals/DeleteSocialConnectionModal";
 import CreateSocialConnectionModal from "./modals/CreateSocialConnectionModal";
-import controlIsHttpUrl from "../../helpers/controlIsHttpUrl";
+import openURL from "@/helpers/openUrl";
 
 function SocialConnectionList({
   socialConnections,
   permissions,
   state,
+  images,
   router,
   setRefreshWhenDataChange,
 }: ISocialConnectionListProps) {
@@ -37,9 +38,9 @@ function SocialConnectionList({
           <>
             <img
               className="cursor-pointer"
-              src={`${row.connectionImageUrl}`}
-              width={50}
-              height={50}
+              src={`${REQUEST_URL}/public/images/${row.connectionImageUrl}`}
+              width={30}
+              height={30}
               alt={row.connectionUrl}
               onClick={() => {
                 setRefreshWhenDataChange(Math.random() * 91238);
@@ -65,7 +66,11 @@ function SocialConnectionList({
     {
       name: "Sosyal Bağlantı Link",
       cell: (row) => (
-        <a href={controlIsHttpUrl(row.connectionUrl)} target="_blank">
+        <a className="cursor-pointer" onClick={(e)=>{
+          console.log("asd");
+          e.preventDefault();
+          openURL(row.connectionUrl)
+        }} target="_blank">
           {row.connectionUrl}
         </a>
       ),
@@ -151,6 +156,7 @@ function SocialConnectionList({
     <>
       {modalVisibles.updatingSocialConnection ? (
         <UpdateSocialConnectionModal
+          images={images}
           router={router}
           state={state}
           socialConnection={modalVisibles.updatingSocialConnection}
@@ -167,6 +173,7 @@ function SocialConnectionList({
         />
       ) : null}
       <CreateSocialConnectionModal
+        images={images}
         state={state}
         isVisible={modalVisibles.isCreateModalVisible}
         handleClose={closeCreateSocialConnectionModal}
@@ -191,10 +198,15 @@ function SocialConnectionList({
           open={modalVisibles.isFullscreenVisible}
           onClose={closeFullscreenModal}
         >
-          <Box sx={[modalBoxStyle, { padding: 0, borderRadius: 0,width:"auto " }]}>
+          <Box
+            sx={[
+              modalBoxStyle,
+              { padding: 0, borderRadius: 0, width: "auto " },
+            ]}
+          >
             {modalVisibles.selectedImage && (
               <img
-                src={controlIsHttpUrl(modalVisibles.selectedImage)}
+                src={REQUEST_URL + '/public/images/' +modalVisibles.selectedImage}
                 alt={modalVisibles.selectedImage}
                 style={{ maxWidth: "100%", maxHeight: "100%" }}
               />

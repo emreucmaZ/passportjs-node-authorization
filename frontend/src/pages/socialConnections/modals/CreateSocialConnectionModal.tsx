@@ -24,6 +24,7 @@ function CreateSocialConnectionModal({
   isVisible,
   handleClose,
   state,
+  images
 }: ICreateSocialConnectionModalProps) {
   const editor = useRef<any>();
   const formik = useFormik({
@@ -88,24 +89,31 @@ function CreateSocialConnectionModal({
                   formik.touched.connectionUrl && formik.errors.connectionUrl
                 }
               />
-              <TextField
-                fullWidth
-                sx={{ marginTop: 2 }}
-                id="connectionImageUrl"
-                name="connectionImageUrl"
-                label="connectionImageUrl"
-                value={formik.values.connectionImageUrl}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={
-                  formik.touched.connectionImageUrl &&
-                  Boolean(formik.errors.connectionImageUrl)
-                }
-                helperText={
-                  formik.touched.connectionImageUrl &&
-                  formik.errors.connectionImageUrl
-                }
-              />
+              <FormControl fullWidth sx={{ marginTop: 2 }}>
+                <InputLabel id="demo-simple-select-label">Sosyal Bağlantı  Resmi</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={formik.values.connectionImageUrl}
+                  label="Sosyal Bağlantı Resmi"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  error={
+                    formik.touched.connectionImageUrl && Boolean(formik.errors.connectionImageUrl)
+                  }
+                >
+                  {images?.map((image: IImage) => {
+                    return (
+                      <MenuItem onClick={() => {
+                        formik.setFieldValue("connectionImageUrl", image.filename)
+                      }} value={image.filename}>
+                        <img src={`${REQUEST_URL}/public/images/${image.filename}`} width={30} height={30} />
+                        {image.title}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
               <Button
                 sx={{ marginTop: 2 }}
                 color="primary"
