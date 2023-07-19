@@ -28,3 +28,6 @@ export const permissionList: IPermission[] = [
   { value: "upload_image", label: "Resim Ekleme" },
   { value: "delete_image", label: "Resim Silme" },
 ];
+
+export const logTypes: string[] = ["create", "update", "delete"];
+export const tables: string[] = ["users", "roles", "menus","images","blogs"];
