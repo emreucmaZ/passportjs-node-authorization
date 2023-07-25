@@ -42,8 +42,6 @@ function UpdateSocialConnectionModal({
     },
   });
 
-  console.log(formik.values);
-
   return (
     <>
       <Modal onClose={handleClose} open={isVisible}>

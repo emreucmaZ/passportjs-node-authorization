@@ -46,9 +46,6 @@ function UpdateBlogModal({
       updateBlog(values, state, handleClose);
     },
   });
-
-  console.log(formik.values);
-
   return (
     <>
       <Modal onClose={handleClose} open={isVisible}>

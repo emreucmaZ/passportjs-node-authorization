@@ -64,7 +64,6 @@ function CreateRoleModal({
                   const transformedPermissions = selected.map(
                     (permission: IPermission) => permission.value
                   );
-                  console.log(transformedPermissions);
                   setPermissionOptions(selected);
                   formik.setFieldValue("permissions", transformedPermissions);
                 }}

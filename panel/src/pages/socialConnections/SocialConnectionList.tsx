@@ -67,7 +67,6 @@ function SocialConnectionList({
       name: "Sosyal Bağlantı Link",
       cell: (row) => (
         <a className="cursor-pointer" onClick={(e)=>{
-          console.log("asd");
           e.preventDefault();
           openURL(row.connectionUrl)
         }} target="_blank">

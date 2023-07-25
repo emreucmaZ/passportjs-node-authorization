@@ -1,0 +1,33 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3002",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@fontsource/roboto": "^5.0.5",
+    "@mui/icons-material": "^5.14.1",
+    "@mui/material": "^5.14.1",
+    "@mui/styled-engine-sc": "^5.12.0",
+    "@types/node": "20.4.2",
+    "@types/react": "18.2.15",
+    "@types/react-dom": "18.2.7",
+    "add": "^2.0.6",
+    "autoprefixer": "10.4.14",
+    "axios": "^1.4.0",
+    "next": "13.4.10",
+    "postcss": "8.4.26",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "styled-components": "^6.0.4",
+    "tailwindcss": "3.3.3",
+    "typescript": "5.1.6",
+    "yarn": "^1.22.19"
+  }
+}
