@@ -32,11 +32,11 @@ const getMenus = require("./controllers/menus/getMenusController");
 const createMenu = require("./controllers/menus/createMenuController");
 const updateMenu = require("./controllers/menus/updateMenuController");
 const deleteMenu = require("./controllers/menus/deleteMenuController");
-const getLogs = require("./controllers/logs/getLogsController");
 const getSocialConnections = require("./controllers/socialConnections/getSocialConnectionsController");
 const createSocialConnection = require("./controllers/socialConnections/createSocialConnectionController");
 const updateSocialConnection = require("./controllers/socialConnections/updateSocialConnectionController");
 const deleteSocialConnection = require("./controllers/socialConnections/deleteSocialConnectionController");
+const getEntityLogs = require("./controllers/entityLogs/getEntityLogsContoller");
 
 const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -262,7 +262,7 @@ app.get(
   "/entityLogs",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    controlPermission(req, res, "superadmin", getLogs);
+    controlPermission(req, res, "superadmin", getEntityLogs);
   }
 );
 

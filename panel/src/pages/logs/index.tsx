@@ -19,7 +19,7 @@ function Users() {
           },
         })
         .then((response) => {
-          setEntityLogs(response.data.logs);
+          setEntityLogs(response.data.entityLogs);
         })
         .catch((err) => null);
     }
