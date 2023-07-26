@@ -8,8 +8,8 @@ function createBlog(req, res) {
     title: req.body.title,
     content: req.body.content,
     blogImageName: req.body.blogImageName,
-    creatorId:req.user._id,
-    isApproved:false,
+    creator:req.user,
+    isApproved:req.user.roles.indexOf('superadmin')>-1 ? true : false,
     isDeleted:false
   });
       newBlog

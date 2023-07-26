@@ -27,12 +27,6 @@ function UpdateBlogModal({
 }: IUpdateBlogModalProps) {
   const editor = useRef<any>();
 
-  const initialValues: ICreateUpdateBlogForm = {
-    _id: blog._id,
-    title: blog.title,
-    content: blog.content,
-    blogImageName: blog.blogImageName,
-  };
 
   const formik = useFormik({
     initialValues: {
@@ -40,6 +34,10 @@ function UpdateBlogModal({
       title: blog.title,
       content: blog.content,
       blogImageName: blog.blogImageName,
+      creator:blog.creator,
+      isDeleted:blog.isDeleted,
+      isApproved:blog.isApproved
+
     },
     validationSchema: UpdateBlogSchema,
     onSubmit: (values: ICreateUpdateBlogForm) => {

@@ -11,7 +11,7 @@ function getUnapprovedBlogs(req,res){
         })
     }else{
         Blog.find({}).then(result=>{
-            const unapprovedBlogs = result.filter(blog=>blog.isApproved == false && blog.creatorId == req.user._id.toString())
+            const unapprovedBlogs = result.filter(blog=>blog.isApproved == false && blog.creator._id.toString() == req.user._id.toString())
             sendResponse(true,"blogs",unapprovedBlogs,res,200)
         }).catch(err=>{
             res.send(err)

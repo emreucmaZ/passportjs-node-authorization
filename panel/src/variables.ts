@@ -1,12 +1,11 @@
 import { IPermission } from "./pages/roles/modals/interfaces";
 
-export const REQUEST_URL = "http://localhost:5002";
+export const REQUEST_URL = "http://iapc:5002";
 
 export const modalBoxStyle = {
   position: "absolute",
   top: "50%",
   left: "50%",
-  width: "70%",
   transform: "translate(-50%, -50%)",
   bgcolor: "background.paper",
   boxShadow: 24,
@@ -21,6 +20,21 @@ export const permissionList: IPermission[] = [
   { value: "create_menu", label: "Menü Ekleme" },
   { value: "delete_menu", label: "Menü Silme" },
   { value: "update_menu", label: "Menü Düzenleme" }
+];
+
+export const months = [
+  "Ocak",
+  "Şubat",
+  "Mart",
+  "Nisan",
+  "Mayıs",
+  "Haziran",
+  "Temmuz",
+  "Ağustos",
+  "Eylül",
+  "Ekim",
+  "Kasım",
+  "Aralık"
 ];
 
 export const logTypes: string[] = ["create", "update", "delete","signup"];

@@ -19,6 +19,7 @@ import { IMenu } from "@/redux/interfaces/menu";
 import slugify from "slugify";
 import { imageUpload } from "./functions/imageUpload";
 import dynamic from "next/dynamic";
+import TextAreaComponent from "@/components/TextAreaComponent";
 
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
@@ -45,58 +46,6 @@ function UpdateBlogModal({
     },
   });
 
-  const config:Object = useMemo(
-    () => ({
-      readonly: false,
-      disablePlugins: ["paste"],
-      tabIndex: 1,
-      defaultActionOnPaste: "insert_clear_html",
-      toolbarButtonSize: "large",
-      buttons: [
-        "source",
-        "|",
-        "bold",
-        "italic",
-        "|",
-        "ul",
-        "ol",
-        "|",
-        "font",
-        "fontsize",
-        "brush",
-        "paragraph",
-        "|",
-        "video",
-        "table",
-        "link",
-        "|",
-        "left",
-        "center",
-        "right",
-        "justify",
-        "|",
-        "undo",
-        "redo",
-        "|",
-        "hr",
-        "eraser",
-        "fullsize",
-      ],
-      extraButtons: [
-        {
-          name: "insertDate",
-          tooltip: "Insert current Date",
-          iconURL:
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Picture_icon_BLACK.svg/1200px-Picture_icon_BLACK.svg.png",
-          exec: (editor: any) => {
-            imageUpload(editor, state);
-          },
-        },
-      ],
-    }),
-    []
-  );
-
   return (
     <>
       <Modal onClose={handleClose} open={isVisible}>
@@ -120,14 +69,7 @@ function UpdateBlogModal({
                 error={formik.touched.title && Boolean(formik.errors.title)}
                 helperText={formik.touched.title && formik.errors.title}
               />
-              <JoditEditor
-                ref={editor}
-                onChange={(value) => {
-                  formik.setFieldValue("content", value);
-                }}
-                config={config}
-                value={formik.values.content}
-              />
+              <TextAreaComponent editor={editor} formik={formik} state={state} />
               <TextField
                 sx={{ marginTop: 2 }}
                 fullWidth

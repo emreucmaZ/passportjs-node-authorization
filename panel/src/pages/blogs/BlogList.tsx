@@ -76,8 +76,8 @@ function BlogList({
       selector: (row) => row.title,
     },
     {
-      name: "Creator Id",
-      selector: (row) => row.creatorId,
+      name: "Creator",
+      selector: (row) => row.creator.username,
     },
     {
       name: "Actions",
@@ -97,15 +97,22 @@ function BlogList({
             <EditNoteIcon color="inherit" fontSize="small" />
           </span>
 
-          {row.isDeleted ?  <span
+          {row.isDeleted ? (
+            <span
               className="font-bold py-2 px-4 rounded cursor-pointer"
               onClick={async () => {
                 setRefreshWhenDataChange(Math.random() * 91238);
-                updateBlogDeletion(row._id,!row.isDeleted,state,setRefreshWhenDataChange);
+                updateBlogDeletion(
+                  row._id,
+                  !row.isDeleted,
+                  state,
+                  setRefreshWhenDataChange
+                );
               }}
             >
               <UndoIcon color="success" fontSize="small" />
-            </span> : (
+            </span>
+          ) : (
             <span
               className="font-bold py-2 px-4 rounded cursor-pointer"
               onClick={async () => {

@@ -2,7 +2,6 @@ import {
   Box,
   Button,
   TextField,
-  Input,
   InputLabel,
   Modal,
   FormControl,
@@ -13,9 +12,7 @@ import React, { useEffect, useRef } from "react";
 import { ICreateUpdateBlogForm, ICreateBlogModalProps } from "./interfaces";
 import { REQUEST_URL, modalBoxStyle } from "@/variables";
 import { createBlog } from "./functions";
-import { IRole } from "@/redux/interfaces/role/IRole";
 import { useFormik } from "formik";
-import * as Yup from "yup"
 import { CreateBlogSchema } from "../schemas/CreateBlogSchema";
 import { IImage } from "@/pages/images/interfaces/IImage";
 import TextAreaComponent from "@/components/TextAreaComponent";
@@ -28,6 +25,9 @@ function CreateBlogModal({ isVisible, handleClose, state,images }: ICreateBlogMo
       title: "",
       content: "",
       blogImageName: "",
+      creator:null,
+      isApproved:false,
+      isDeleted:false
     },
     validationSchema: CreateBlogSchema,
     onSubmit: (values: ICreateUpdateBlogForm) => {
@@ -44,7 +44,7 @@ function CreateBlogModal({ isVisible, handleClose, state,images }: ICreateBlogMo
   return (
     <>
       <Modal open={isVisible} onClose={handleClose}>
-        <Box sx={modalBoxStyle}>
+        <Box sx={[modalBoxStyle,{width:"80%"}]}>
           <div className="mb-8">
             <h1 className="font-bold text-xl">Blog Yazısı Ekle</h1>
           </div>

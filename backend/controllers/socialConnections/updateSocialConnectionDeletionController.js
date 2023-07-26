@@ -21,7 +21,7 @@ async function updateSocialConnectionDeletion(req, res) {
       });
   } else {
     SocialConnection.findById(req.params.socialConnectionId).then((socialConnection) => {
-      if(socialConnection.creatorId == req.user._id.toString()){
+      if(socialConnection.creator._id == req.user._id.toString()){
         SocialConnection.findByIdAndUpdate(req.params.socialConnectionId,{
           isDeleted:req.body.isDeleted
         })

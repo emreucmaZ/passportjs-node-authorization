@@ -9,7 +9,7 @@ const blogSchema = new mongoose.Schema({
   title: String,
   content: String,
   blogImageName: String,
-  creatorId:String,
+  creator:Object,
   isDeleted:Boolean,
   isApproved:Boolean
 });

@@ -13,8 +13,8 @@ function uploadImage(req, res) {
     const newImage = new Image({
       title: req.body.title,
       filename: slugify(req.file.originalname, { lower: true }),
-      creationTime:new Date(),
-      creatorId:req.user._id.toString()
+      creationDate:new Date(),
+      creator:req.user
     });
     newImage
       .save()

@@ -8,12 +8,13 @@ function TextAreaComponent({ formik, editor, state }: ITextAreaComponentProps) {
   return useMemo(() => {
     return (
       <>
-        <JoditEditor
+      <JoditEditor
           className="mt-4"
           ref={editor}
           value={formik.values.content}
           onChange={(value: string) => formik.setFieldValue("content", value)}
           config={{
+            toolbarAdaptive:false,
             readonly: false,
             disablePlugins: ["paste"],
             tabIndex: 1,
@@ -47,7 +48,6 @@ function TextAreaComponent({ formik, editor, state }: ITextAreaComponentProps) {
               "|",
               "hr",
               "eraser",
-              "fullsize",
             ],
             extraButtons: [
               {
@@ -62,6 +62,7 @@ function TextAreaComponent({ formik, editor, state }: ITextAreaComponentProps) {
             ],
           }}
         />
+        
       </>
     );
   }, []);

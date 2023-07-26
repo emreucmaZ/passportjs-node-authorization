@@ -32,6 +32,7 @@ function UpdateSocialConnectionModal({
     connectionTitle: socialConnection.connectionTitle,
     connectionUrl: socialConnection.connectionUrl,
     connectionImageUrl: socialConnection.connectionImageUrl,
+    creator:socialConnection.creator
   };
 
   const formik = useFormik({
@@ -100,6 +101,10 @@ function UpdateSocialConnectionModal({
                   formik.errors.connectionImageUrl
                 }
               />
+               {
+                formik.values.connectionImageUrl ? 
+                <img src={formik.values.connectionImageUrl} width={50} height={50} /> : null
+              }
               <Button
                 sx={{ marginTop: 2 }}
                 color="primary"

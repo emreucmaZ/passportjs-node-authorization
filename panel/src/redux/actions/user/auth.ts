@@ -20,7 +20,8 @@ export function login (loginForm: ILoginForm) {
             username: response.data.response.user.username,
             roleId: response.data.response.user.roleId,
             password: response.data.response.user.password,
-            _id:response.data.response.user._id
+            _id:response.data.response.user._id,
+            creationDate:response.data.response.user.creationDate
           }
         });
       })
@@ -38,8 +39,24 @@ export function logOut() {
         roleId: null,
         password: null,
         token: null,
-        _id:null
+        _id:null,
+        creationDate:null
       }
     });
   };
 }
+
+export function signup(loginForm: ILoginForm) {
+  return (dispatch: Dispatch<IUserAction>) => {
+    axios
+      .post(REQUEST_URL + '/signup', loginForm)
+      .then((response) => {
+        console.log(response);
+        
+        if(response.data.durum==true){
+          dispatch<any>(login(loginForm))
+        }
+      })
+      .catch((error) =>null);
+  };
+};

@@ -1,4 +1,3 @@
-import { IUser } from "@/redux/interfaces/user";
 
 export interface IModalVisibles{
     isUploadModalVisible: boolean,

@@ -1,1 +1,17 @@
-backende idye göre kullanıcı bilgileri çekme eklenecek
+https://elements.envato.com/bunzo-react-gatsby-blog-template-36KY9RH
+
+tartışma eklenicek öğrenciler için
+
+seviyeleme eklenecek
+
+öğrencilerin gezdiği gördüğü yerlerle alakalı açıklamalı galeri eklenecek
+
+başarılar ve ödüller eklenecek açıklamalı cv eklenecek tarih ve konum
+
+blog yazıları günlüğe çevrilebilir 
+
+yazılar eğer belirli bir konumda yaşananlara aitse burdan lokasyon seçilip o lokasyona göre reklamlar gösterilebilir
+
+eklenen yazılara yorumlama eklenecek
+
+kullanıcılara alan (üni ve 11-12. sınıf için) ve şube(9-10. sınıf için)

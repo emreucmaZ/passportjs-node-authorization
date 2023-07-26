@@ -15,7 +15,7 @@ function updateBlogDeletion(req, res) {
         });
     } else {
         Blog.findById(req.params.blogId).then((blog) => {
-            if (blog.creatorId == req.user._id.toString()) {
+            if (blog.creator._id.toString() == req.user._id.toString()) {
                 Blog.findByIdAndUpdate(req.params.blogId, {
                     isDeleted: req.body.isDeleted
                 }).then((response) => {

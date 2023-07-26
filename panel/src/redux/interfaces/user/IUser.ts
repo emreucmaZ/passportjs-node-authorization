@@ -5,5 +5,6 @@ export interface IUser{
     username:string,
     password:string,
     roleId:string,
-    roles: Array<string>
+    roles: Array<string>,
+    creationDate:string
 }

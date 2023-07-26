@@ -6,10 +6,11 @@ const userSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     auto: true
   },
-  username: { type: String, unique: true },
-  password: String,
+  username: { type: String, unique: true,required:true },
+  password: {type:String,required:true},
   roleId: String,
-  roles:[]
+  roles:[],
+  creationDate:Date
 });
 
 userSchema.methods.verifyPassword = function (password) {

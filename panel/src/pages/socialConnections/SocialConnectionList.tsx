@@ -35,7 +35,7 @@ function SocialConnectionList({
   });
   const [isMySocialConnectionsListing, setIsMySocialConnectionsListing] =
     useState<boolean>(false);
-  
+
   const columns: TableColumn<SocialConnectionDataRow>[] = [
     {
       name: "Sosyal Bağlantı Resmi",
@@ -44,7 +44,7 @@ function SocialConnectionList({
           <>
             <img
               className="cursor-pointer"
-              src={`${REQUEST_URL}/public/images/${row.connectionImageUrl}`}
+              src={`${row.connectionImageUrl}`}
               width={30}
               height={30}
               alt={row.connectionUrl}
@@ -249,9 +249,7 @@ function SocialConnectionList({
           >
             {modalVisibles.selectedImage && (
               <img
-                src={
-                  REQUEST_URL + "/public/images/" + modalVisibles.selectedImage
-                }
+                src={modalVisibles.selectedImage}
                 alt={modalVisibles.selectedImage}
                 style={{ maxWidth: "100%", maxHeight: "100%" }}
               />
@@ -268,7 +266,7 @@ function SocialConnectionList({
             isMySocialConnectionsListing
               ? socialConnections.filter(
                   (socialConnection) =>
-                    socialConnection.creator._id == state.user._id
+                    socialConnection.creator?._id == state.user._id
                 )
               : socialConnections
           }

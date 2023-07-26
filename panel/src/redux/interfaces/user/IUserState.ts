@@ -3,5 +3,6 @@ export interface IUserState{
     roleId:string | null,
     password:string | null,
     token:string | null,
-    _id:string | null
+    _id:string | null,
+    creationDate:string
 }

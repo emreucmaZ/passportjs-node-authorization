@@ -18,8 +18,9 @@ function createUser(req, res) {
       }
       newUser.password = hash; // Şifrelenmiş parolayı kaydetme
       if (!newUser.roleId) {
-        newUser.roleId = "64aeed9518153db10b51ad39";
+        newUser.roleId = "0";
       }
+      newUser.creationDate = new Date();
       newUser
         .save()
         .then((savedUser) => {

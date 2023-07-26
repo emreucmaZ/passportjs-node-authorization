@@ -28,7 +28,7 @@ function UpdateRoleModal({
     name: role.name,
     permissions: role.permissions,
   };
-
+  
 
   const formik = useFormik({
     initialValues: {
@@ -45,7 +45,7 @@ function UpdateRoleModal({
   return (
     <>
       <Modal onClose={handleClose} open={isVisible}>
-        <Box sx={modalBoxStyle}>
+        <Box sx={[modalBoxStyle, { width: "50%", height: "50%" }]}>
           <div>
             <form onSubmit={formik.handleSubmit}>
               <TextField
@@ -60,7 +60,7 @@ function UpdateRoleModal({
                 helperText={formik.touched.name && formik.errors.name}
               />
               <Select
-              className="mt-4"
+                className="mt-4"
                 isMulti
                 options={permissionList}
                 value={permissionOptions}

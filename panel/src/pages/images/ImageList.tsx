@@ -56,8 +56,8 @@ function ImageList({
       cell: (row) => row.title,
     },
     {
-      name: "Creator Id",
-      cell: (row) => row.creatorId,
+      name: "Creator",
+      cell: (row) => row.creator.username,
     },
     {
       name: "Actions",
@@ -77,7 +77,7 @@ function ImageList({
             >
               <DeleteOutlineIcon color="error" fontSize="small" />
             </span>
-          ) : row.creatorId == state.user._id ? (
+          ) : row.creator._id.toString() == state.user._id ? (
             <span
               className="font-bold py-2 px-4 rounded cursor-pointer"
               onClick={() => {

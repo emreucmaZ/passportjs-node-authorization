@@ -12,7 +12,7 @@ function getApprovedBlogs(req, res) {
     } else {
         Blog.find({}).then(result => {
             const approvedBlogs = result.filter(blog => {
-                if(blog.isApproved == true && blog.creatorId == req.user._id.toString()){
+                if(blog.isApproved == true && blog.creator._id.toString() == req.user._id.toString()){
                     return blog
                 }
             })

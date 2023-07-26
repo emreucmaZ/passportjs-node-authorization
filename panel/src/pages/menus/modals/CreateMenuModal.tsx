@@ -8,7 +8,7 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { ICreateUpdateMenuForm, ICreateMenuModalProps } from "./interfaces";
 import { modalBoxStyle } from "@/variables";
 import { createMenu } from "./functions";
@@ -16,8 +16,6 @@ import { useFormik } from "formik";
 import { CreateMenuSchema } from "../schemas/CreateMenuSchema";
 import { IMenu } from "@/redux/interfaces/menu";
 import slugify from "slugify";
-import { imageUpload } from "./functions/imageUpload";
-import dynamic from "next/dynamic";
 import TextAreaComponent from "../../../components/TextAreaComponent";
 
 function CreateMenuModal({

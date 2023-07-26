@@ -15,12 +15,13 @@ function signUp(req,res){
           return;
         }
         newUser.password = hash; // Şifrelenmiş parolayı kaydetme
+        newUser.creationDate = new Date()
+        newUser.roleId = "0"
         newUser
           .save()
           .then((savedUser) => {
             myLogger.logEntityWithActionType(req.user, "users", savedUser,"signup");
             return sendResponse(true,"message","Kullanıcı Oluşturuldu:" + savedUser,res)
-
           })
           .catch((error) => {
             return sendResponse(false,"message","Kullanıcı oluşturma hatası:" + error,res)

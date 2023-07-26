@@ -6,7 +6,8 @@ const initialState: IUserState = {
   username: null,
   roleId: null,
   password: null,
-  _id:null
+  _id:null,
+  creationDate:''
 };
 
 export function userReducer(state = initialState, action: IUserAction) {

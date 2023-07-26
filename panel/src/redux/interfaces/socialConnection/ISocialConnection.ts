@@ -5,5 +5,5 @@ export interface ISocialConnection {
   connectionTitle: string;
   connectionUrl: string;
   connectionImageUrl: string;
-  creator:UserDataRow;
+  creator:UserDataRow | null;
 }

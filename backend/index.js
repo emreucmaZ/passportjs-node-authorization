@@ -44,6 +44,7 @@ const updateBlogDeletion = require("./controllers/blogs/updateBlogDeletionContro
 const updateSocialConnectionDeletion = require("./controllers/socialConnections/updateSocialConnectionDeletionController");
 const getSocialConnectionsForManagement = require("./controllers/socialConnections/getSocialConnectionsForManagementController");
 const getUserInformations = require("./controllers/user/getUserInformationsController");
+const getUserRoleNameFromRoleId = require("./controllers/user/getUserRoleNameFromRoleId");
 
 const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -196,6 +197,14 @@ app.get(
   }
 );
 
+app.get(
+  "/getUserRoleName",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    getUserRoleNameFromRoleId(req,res)
+  }
+);
+
 app.get("/blogs", async (req, res) => {
   getBlogs(req, res);
 });
@@ -237,7 +246,7 @@ app.put(
   "/blogApprove/:blogId",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    controlPermission(req, res, "", updateBlogApprove);
+    controlPermission(req, res, "superadmin", updateBlogApprove);
   }
 );
 
