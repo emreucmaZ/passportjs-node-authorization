@@ -13,25 +13,35 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import { isAuthorized } from "@/helpers";
+import { ThemeProvider, createTheme } from "@mui/material";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const { pathname } = router;
 
+  const appTheme = createTheme({
+    palette: {
+      mode: 'light',
+    },
+  });
+
   return (
     <>
       <ReduxProvider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          {store.getState().user.token ? (
-             
+          <ThemeProvider theme={appTheme}>
+            {store.getState().user.token ? (
+
               pathname != "/login" ? (
                 <Layout Page={<Component {...pageProps} />} />
               ) : (
                 <LoggedIn router={router} />
               )
             ) : (
-            <LoginPage />
-          )}
+              <LoginPage />
+            )}
+          </ThemeProvider>
+
         </PersistGate>
       </ReduxProvider>
     </>

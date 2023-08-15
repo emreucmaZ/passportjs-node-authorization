@@ -1,6 +1,6 @@
 import { IPermission } from "./pages/roles/modals/interfaces";
 
-export const REQUEST_URL = "http://iapc:5002";
+export const REQUEST_URL = "http://localhost:5002";
 
 export const modalBoxStyle = {
   position: "absolute",

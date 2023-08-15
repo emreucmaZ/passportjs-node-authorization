@@ -9,18 +9,18 @@ import { IRootState } from "@/redux/interfaces/IRootState";
 import LoginPage from "@/pages/login";
 
 function Layout({ Page }: any) {
-  const state = useSelector((state:IRootState) => state);
+  const state = useSelector((state: IRootState) => state);
   const dispatch = useDispatch();
-  const [isLoggedIn,setIsLoggedIn] = useState();
+  const [isLoggedIn, setIsLoggedIn] = useState();
   useEffect(() => {
     return () => {
-      isAuthorized(state.user.token,setIsLoggedIn)
+      isAuthorized(state.user.token, setIsLoggedIn)
     }
   }, [])
 
   return isLoggedIn ? (
     <>
-    
+
       <ResponsiveAppBar />
       <Container maxWidth="xl">{Page}</Container>
     </>
